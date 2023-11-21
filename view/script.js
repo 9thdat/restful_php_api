@@ -1,0 +1,13 @@
+const name = document.getElementById('name')
+const price = document.getElementById('price')
+const description = document.getElementById('description')
+const category = document.getElementById('category')
+const brand = document.getElementById('brand')
+const pre_discount = document.getElementById('pre_discount')
+const discount_percent = document.getElementById('discount_percent')
+const color = document.getElementById('color')
+
+fetch('http://localhost/restful_php_api/api/product/read.php')
+.then(res => res.json())
+.then(data=>console.log(data))
+.catch(error=>console.log(error))

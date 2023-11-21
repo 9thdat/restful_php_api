@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Product</title>
+</head>
+<body>
+    <h1>Search Product by Name</h1>
+    
+    <form onsubmit="event.preventDefault(); SearchProduct();">
+        <label for="key">Key:</label>
+        <input type="text" id="key" name="key">
+        <br>
+        <button type="submit">Search</button>
+        <div id="product_search" style="display: block;"></div>
+    </form>
+
+    
+
+    <p id="result"></p>
+
+    <script>
+        function SearchProduct() { 
+            const keyword = document.getElementById("key").value;
+
+            fetch(`../api/product/search.php?key=${keyword}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.product) {
+                    var productSearch = document.getElementById("product_search");
+                    productSearch.innerHTML = ''; // Clear previous search results
+
+                    data.product.forEach(function (product) {
+                        var productDiv = document.createElement("div");
+                        productDiv.innerHTML = `
+                            <p>${product.name}</p>
+                        `;
+                        productSearch.appendChild(productDiv);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById("result").innerText = 'An error occurred, please try again.';
+            });
+        }
+    </script>
+</body>
+</html>

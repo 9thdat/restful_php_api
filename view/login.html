@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <title>Login page</title>
+</head>
+<body>
+    <h1>Login Customer</h1>
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email">
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+    <br>
+    <button onclick="login()">Login</button>
+    <p id="result"></p>
+
+    <script>
+        function login(){
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            fetch(`../api/customer/login.php?email=${email}&password=${password}`,{
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response=>response.json())
+            .then(data=>{
+                document.getElementById("result").innerText = data.message;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    
+    </script>
+
+</body>
+</html>

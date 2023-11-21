@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Category</title>
+</head>
+<body>
+    <h1>Update Category by ID</h1>
+    <label for="category_id">Category ID:</label>
+    <input type="text" id="category_id" name="category_id">
+    <br>
+    <label for="category_name">New Category Name:</label>
+    <input type="text" id="category_name" name="category_name">
+    <br>
+    <button onclick="updateCategory()">Update</button>
+
+    <p id="result"></p>
+
+    <script>
+        function updateCategory() { 
+            const categoryId = document.getElementById("category_id").value;
+            const categoryName = document.getElementById("category_name").value;
+
+            fetch('../api/product/CRUD/update.php', {
+                method: 'PUT',
+                headers: {
+                    'Content-Transfer-Encoding': 'application/json'
+                },
+                body: JSON.stringify({ id: categoryId, name: categoryName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerText = data.message;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById("result").innerText = 'An error occurred, please try again.';
+            });
+        }
+    </script>
+</body>
+</html>

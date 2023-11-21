@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Thông tin điện thoại</title>
+</head>
+<body>
+    <h1>Thông tin điện thoại</h1>
+
+    <div id="product-list">
+        <!-- Thông tin điện thoại sẽ được hiển thị ở đây -->
+    </div>
+
+    <script>
+        fetch('../api/product/show_by_category_brand.php?category=1?&brand=Apple',{
+            method: 'GET',
+            headers: {
+                'Content-Transfer-Encoding': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('NOT FOUND PRODUCT');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.product) {
+                    var productList = document.getElementById("product-list");
+
+                    data.product.forEach(function (product) {
+                        var productDiv = document.createElement("div");
+                        productDiv.innerHTML = `
+                            <h2>${product.name}</h2>
+                            <p>Price: ${product.price}</p>
+                            <p>Description: ${product.description}</p>
+                            <p>Category: ${product.category}</p>
+                            <p>Brand: ${product.brand}</p>
+                            <p>Pre discount: ${product.pre_discount}</p>
+                            <p>Discount percent: ${product.discount_percent}</p>
+                            <p>Color: ${product.color}</p>
+                            <img src="data:image/jpeg;base64, ${product.image}" alt="${product.name}"/>
+                        `;
+                        productList.appendChild(productDiv);
+                    });
+                }
+            })
+            .catch(error => {
+                var productList = document.getElementById("product-list");
+                productList.innerHTML = "<p>404 NOT FOUND</p>";
+                console.error('Error: ' + error)
+            });
+    </script>
+</body>
+</html>
