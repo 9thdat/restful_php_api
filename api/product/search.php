@@ -22,7 +22,6 @@
         while ($row = $search->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
 
-            $image_data = base64_encode($IMAGE); 
 
             $product_item = array(
                 'id' => $ID,
@@ -31,10 +30,10 @@
                 // 'description' => $DESCRIPTION,
                 // 'category' => $CATEGORY,
                 // 'brand' => $BRAND,
-                // 'pre_discount' => $PRE_DISCOUNT,
-                // 'discount_percent' => $DISCOUNT_PERCENT,
-                // 'image' => $image_data, 
-                // 'color' => $COLOR
+                'pre_discount' => $PRE_DISCOUNT,
+                'discount_percent' => $DISCOUNT_PERCENT,
+                // 'color' => $COLOR,
+                'image' => base64_encode($IMAGE)
             );
             array_push($product_array['product'], $product_item);
             // print_r(json_encode($product_item). "\n"); 

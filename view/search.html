@@ -37,7 +37,12 @@
                     data.product.forEach(function (product) {
                         var productDiv = document.createElement("div");
                         productDiv.innerHTML = `
-                            <p>${product.name}</p>
+                            <h1>Name: ${product.name}</h1>
+                            <p>Price: ${product.price}</p>
+                            <p>Discount percent: ${product.discount_percent}<p>
+                            <p>Pre discount: ${product.pre_discount}<p>
+                            <br>
+                            <img src="data:image/jpeg;base64, ${product.image}" alt="${product.name}"/>
                         `;
                         productSearch.appendChild(productDiv);
                     });

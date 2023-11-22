@@ -63,8 +63,60 @@ class product{
     }
 
     public function search(){
-        $query = "SELECT * FROM product where name LIKE :keyword";
-        // $query = "SELECT * 
+        if ($this->name == "") {
+            return null;
+        }
+
+        $keywords = explode(" ", $this->name);
+
+        
+        
+        $query = "SELECT * FROM product WHERE ";
+        
+        for ($i = 0; $i < count($keywords); $i++) {
+            $param = "keyword{$i}";
+            $query .= "name LIKE :$param";
+        
+            if ($i < count($keywords) - 1) {
+                $query .= " AND ";
+            }
+        }
+    
+        if (stripos($this->name, "Apple") !== false){
+            $query .= " AND brand LIKE :brand";
+        }
+    
+        $sort = " ORDER BY 
+                CASE 
+                    WHEN category = 1 THEN 0 
+                    WHEN category = 2 THEN 1
+                    WHEN category = 3 THEN 2
+                    WHEN category = 4 THEN 3 
+                ELSE 4 
+                END, name";
+                
+        $query .= $sort;
+    
+        $stmt = $this->conn->prepare($query);
+    
+        foreach ($keywords as $i => $keyword) {
+            $param = "keyword{$i}";
+            $stmt->bindValue(":$param", "%$keyword%", PDO::PARAM_STR);
+        }
+    
+        if (stripos($this->name, "Apple") !== false) {
+            $stmt->bindValue(":brand", "%Apple%", PDO::PARAM_STR);
+        }
+    
+        $stmt->execute();
+    
+        return $stmt;
+    }
+    
+    
+
+}
+// $query = "SELECT * 
         //         FROM product 
         //         where name LIKE :keyword
         //         ORDER BY 
@@ -75,14 +127,4 @@ class product{
         //             WHEN category = 4 THEN 3 
         //             ELSE 4 
         //             END, name";
-        $keyword = "%" . $this->name . "%";
-        
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(":keyword", $keyword, PDO::PARAM_STR);
-        $stmt->execute();
-
-        return $stmt;
-    }
-    
-
-}
+?>
