@@ -83,7 +83,7 @@ class product{
         }
     
         if (stripos($this->name, "Apple") !== false){
-            $query .= " AND brand LIKE :brand";
+            $query .= " OR brand =:brand";
         }
     
         $sort = " ORDER BY 
@@ -105,7 +105,7 @@ class product{
         }
     
         if (stripos($this->name, "Apple") !== false) {
-            $stmt->bindValue(":brand", "%Apple%", PDO::PARAM_STR);
+            $stmt->bindValue(":brand", "Apple", PDO::PARAM_STR);
         }
     
         $stmt->execute();
