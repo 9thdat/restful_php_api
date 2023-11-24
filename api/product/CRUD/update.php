@@ -3,8 +3,8 @@
     header("Content-Type: application/json");
     header("Access-Control-Allow-Methods: PUT");
     header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With");
-    include_once("../../config/db_azure.php");
-    include_once("../../model/category.php");
+    include_once("../../../model/category.php");
+    include_once("../../../config/db_azure.php");
 
     $db = new db();
     $connect = $db->connect();

@@ -11,6 +11,7 @@ class product{
     public $pre_discount;
     public $discount_percent;
     public $color;
+    public $category_name;
 
     public function __construct($db){
         $this->conn = $db;
@@ -46,18 +47,22 @@ class product{
 
     //show by id
     public function show_by_category(){
-        $query = "SELECT * FROM product where category = ?";
+        $query = "SELECT * 
+                FROM product , category 
+                Where category.name = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->category);
+        $stmt->bindParam(1, $this->category_name);
         $stmt->execute();
         return $stmt;
     }
     
     public function show_by_category_brand(){
-        $query = "SELECT * FROM product where brand=? and category = ?";
+        $query = "SELECT * 
+                FROM product, category 
+                Where product.brand=? and category.name = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->brand);
-        $stmt->bindParam(2, $this->category);
+        $stmt->bindParam(2, $this->category_name);
         $stmt->execute();
         return $stmt;
     }
@@ -69,8 +74,6 @@ class product{
 
         $keywords = explode(" ", $this->name);
 
-        
-        
         $query = "SELECT * FROM product WHERE ";
         
         for ($i = 0; $i < count($keywords); $i++) {
@@ -89,8 +92,8 @@ class product{
         $sort = " ORDER BY 
                 CASE 
                     WHEN category = 1 THEN 0 
-                    WHEN category = 2 THEN 1
-                    WHEN category = 3 THEN 2
+                    WHEN category = 2 THEN 1 
+                    WHEN category = 3 THEN 2 
                     WHEN category = 4 THEN 3 
                 ELSE 4 
                 END, name";
@@ -111,6 +114,13 @@ class product{
         $stmt->execute();
     
         return $stmt;
+    }
+    public function show_image_detatils(){
+        $query = "SELECT * 
+                  FROM image_detail 
+                  WHERE color =: color and product_id  =: product_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":color");
     }
     
     

@@ -8,7 +8,7 @@
     $connect = $db->connect();
 
     $product = new product($connect);
-    $product->category = isset($_GET["category"]) ? $_GET["category"] : die();
+    $product->category_name = isset($_GET["category_name"]) ? $_GET["category_name"] : die();
     $product->brand = isset($_GET["brand"]) ? $_GET["brand"] : die();
 
     $show_by_category_brand = $product->show_by_category_brand();
@@ -33,7 +33,7 @@
                 'brand' => $BRAND,
                 'pre_discount' => $PRE_DISCOUNT,
                 'discount_percent' => $DISCOUNT_PERCENT,
-                'image' => $image_data, // Trả về dữ liệu hình ảnh dưới dạng base64
+                'image' => $image_data, 
                 'color' => $COLOR
             );
             array_push($product_array['product'], $product_item);
