@@ -19,7 +19,8 @@
         $product_array = [];
         $product_array['product'] = [];
 
-        while ($row = $show_by_category_brand->fetch(PDO::FETCH_ASSOC)) {
+        // while ($row = $show_by_category_brand->fetch(PDO::FETCH_ASSOC)) {
+        foreach ($show_by_category_brand as $row){
             extract($row);
 
             $image_data = base64_encode($IMAGE); 
