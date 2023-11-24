@@ -21,8 +21,7 @@
 
         while ($row = $search->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
-
-
+            
             $product_item = array(
                 'id' => $ID,
                 'name' => $NAME,
