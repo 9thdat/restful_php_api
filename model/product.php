@@ -31,18 +31,7 @@ class product{
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->id);
         $stmt->execute();
-        
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $this->name = $row["NAME"];
-        $this->price = $row["PRICE"];
-        $this->description = $row["DESCRIPTION"];
-        $this->image = $row["IMAGE"];
-        $this->category = $row["CATEGORY"];
-        $this->brand = $row["BRAND"];
-        $this->pre_discount = $row["PRE_DISCOUNT"];
-        $this->discount_percent = $row["DISCOUNT_PERCENT"];
-        $this->color = $row["COLOR"]; 
+        return $stmt;
     }
 
     //show by id

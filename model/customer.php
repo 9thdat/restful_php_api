@@ -18,19 +18,19 @@ class customer{
         $this->conn= $connect;
     }
     public function login(){
-        $query = "SELECT * FROM customer WHERE email =? and password =?";
+        $query = "SELECT * FROM customer WHERE email = :email ";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->email);
-        $stmt->bindParam(2, $this->password);
-
-        if($stmt->execute()){
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            if($user){
-                return true;
-            }else{
-                return false;
-            }
-        }
+        $stmt->bindParam(":email", $this->email);
+        $stmt->execute();
+        return $stmt;
+        // if($stmt->execute()){
+        //     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        //     if($user){
+        //         return true;
+        //     }else{
+        //         return false;
+        //     }
+        // }
         
     }
     public function signup(){

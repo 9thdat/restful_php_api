@@ -11,27 +11,37 @@
     
     $product->id = isset($_GET["id"]) ? $_GET["id"] : die();
 
-    $product->show_by_id();
-
-    $image_data = base64_encode($product->image);
-
-    $product_array = [];
-    $product_array['product'] = [];
+    $show_by_id = $product->show_by_id();
+    $row = $show_by_id->rowCount();
     
-    $product_item = array(
-        'id' => $product->id,
-        'name' => $product->name,
-        'price' => $product->price,
-        'description' => $product->description,
-        'category' => $product->category,
-        'brand' => $product->brand,
-        'pre_discount' => $product->pre_discount,
-        'discount_percent' => $product->discount_percent,
-        'image' => $image_data, 
-        'color' => $product->color
-    );
-    
-    array_push($product_array['product'], $product_item);
-    $json_data = json_encode($product_array, JSON_PRETTY_PRINT);
-    echo $json_data;
+    if ($row > 0){
+        $product_array = [];
+        $product_array['product'] = [];
+
+        foreach ($show_by_id as $row){
+            extract($row);
+
+            $image_data = base64_encode($IMAGE); 
+
+            $product_item = array(
+                'id' => $ID,
+                'name' => $NAME,
+                'price' => $PRICE,
+                'description' => $DESCRIPTION,
+                'category' => $CATEGORY,
+                'brand' => $BRAND,
+                'pre_discount' => $PRE_DISCOUNT,
+                'discount_percent' => $DISCOUNT_PERCENT,
+                'image' => $image_data, 
+                'color' => $COLOR
+            );
+            array_push($product_array['product'], $product_item);
+        }
+        $json_data = json_encode($product_array, JSON_PRETTY_PRINT);
+        echo $json_data;
+    }
+    else{
+        http_response_code(404); 
+        echo json_encode(array("message" => "404 NOT FOUND"), JSON_PRETTY_PRINT);
+    }
 ?>
