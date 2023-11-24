@@ -35,10 +35,9 @@ class customer{
     }
     public function signup(){
         $query = "INSERT INTO customer(email, name, password, phone, gender, birthday, address, quarter, district, city, status)
-                  VALUES (:email, :name, :password, :phone, :gender, STR_TO_DATE(:birthday, '%d-%m-%Y'), :address, :quarter, :district, :city, :status)";
+                  VALUES (:email, :name, SHA2(:password, 256), :phone, :gender, STR_TO_DATE(:birthday, '%d-%m-%Y'), :address, :quarter, :district, :city, :status)";
     
         $stmt = $this->conn->prepare($query);
-    
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":password", $this->password);
