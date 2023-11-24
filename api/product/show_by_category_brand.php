@@ -8,8 +8,8 @@
     $connect = $db->connect();
 
     $product = new product($connect);
-    $product->category_name = isset($_GET["category_name"]) ? $_GET["category_name"] : die();
-    $product->brand = isset($_GET["brand"]) ? $_GET["brand"] : die();
+    $product->category_name = isset($_GET["categoryName"]) ? $_GET["categoryName"] : null;
+    $product->brand = isset($_GET["brand"]) ? $_GET["brand"] : null;
 
     $show_by_category_brand = $product->show_by_category_brand();
 

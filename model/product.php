@@ -57,12 +57,29 @@ class product{
     }
     
     public function show_by_category_brand(){
-        $query = "SELECT * 
-                FROM product, category 
-                Where product.brand=? and category.name = ?";
+        $query = "SELECT * FROM product, category ";
+
+        if ($this->brand || $this->category_name ){
+            $query .= " WHERE ";
+            if ($this->brand && $this->category_name){
+                $query .= "product.brand = :brand AND category.name = :category_name";
+            }else{
+                if ($this->brand){
+                    $query .= "product.brand = :brand";
+                }
+                if ($this->category_name){
+                    $query .= "category.name = :category_name";
+                }
+            }
+
+        }
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->brand);
-        $stmt->bindParam(2, $this->category_name);
+        if ($this->brand) {
+            $stmt->bindParam(':brand', $this->brand);
+        }
+        if ($this->category_name) {
+            $stmt->bindParam(':category_name', $this->category_name);
+        }
         $stmt->execute();
         return $stmt;
     }
