@@ -38,7 +38,7 @@
                         $payload = [
                             'iat' => time(),
                             'iss' => 'localhost',
-                            'exp' => time() + (10*60),
+                            'exp' => time() + 1,
                             'data' => [
                                 'email' => $EMAIL,
                                 'name' => $NAME
