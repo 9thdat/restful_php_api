@@ -3,46 +3,69 @@
     header('Access-Control-Allow-Method:POST');
     header("Content-Type: application/json");
     include_once("../../config/db_azure.php");
-    include_once("../../model/customer.php");    
+    include_once("../../model/customer.php");
+    include_once("../../vendor/autoload.php");   
+    
+    use \Firebase\JWT\JWT;
 
     $db = new db();
     $connect = $db -> connect();
 
     $customer = new customer($connect);
 
-    // $customer->email = isset($_GET["email"])? $_GET["email"] : die();
-    // $customer->password = isset($_GET["password"]) ? $_GET["password"] : die();
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $data = json_decode(file_get_contents("php://input", true));
+        $customer->email = htmlentities($data->email);
 
-    $data = json_decode(file_get_contents("php://input", true));
-    $customer->email = htmlentities($data->email);
+        $login = $customer->login();
+        $num = $login->rowCount();
+        if ($num>0){
+            foreach($login as $row){
+                    extract($row);
+                    $password_input = htmlentities($data->password);
+                    if(hash("sha256", $password_input) != $PASSWORD){
+                        echo json_encode([
+                            'status' => 404,
+                            'message' => 'Email or Password is incorrect.',
+                        ]);
 
-    $login = $customer->login();
-    $num = $login->rowCount();
+                    }else if ($STATUS != "active"){
+                        echo json_encode([
+                            'status' => 404,
+                            'message' => 'User is not activated. Please contact to admin.',
+                        ]);
+                    }else{
+                        $payload = [
+                            'iat' => time(),
+                            'iss' => 'localhost',
+                            'exp' => time() + (10*60),
+                            'data' => [
+                                'email' => $EMAIL,
+                                'name' => $NAME
+                            ]
+                        ];
+                        $secret_key = "techshop";
+                        $jwt = JWT::encode($payload, $secret_key, 'HS256');
+                        echo json_encode([
+                            'status' => 1,
+                            'jwt' => $jwt,
+                            'message' => 'Login Successfully'
+                        ]);
 
-    if ($num > 0){
-        foreach($login as $row){
-            extract($row);
-            $password_input = htmlentities($data->password);
-            if(hash("sha256", $password_input) == $PASSWORD){
-                http_response_code(200); 
-                echo json_encode(array("message" => "200 OK"), JSON_PRETTY_PRINT);
-
-            }else{
-                http_response_code(404); 
-                echo json_encode(array("message" => "404 NOT FOUND"), JSON_PRETTY_PRINT);
+                    }
             }
+        }else{
+            echo json_encode([
+                'status' => 404,
+                'message' => 'Email or Password is incorrect.',
+            ]);
         }
-    }else{
-        http_response_code(404); 
-                echo json_encode(array("message" => "404 NOT FOUNDd"), JSON_PRETTY_PRINT);
+    }else {
+        echo json_encode([
+        'status' => 0,
+        'message' => 'Access Denied',
+    ]);
     }
-
-
-
-    // if($customer->login()){
-    //     echo json_encode(array("message" => "200 OK"), JSON_PRETTY_PRINT);
-    // }else{
-    //     echo json_encode(array("message" => "404 NOT FOUND"), JSON_PRETTY_PRINT);
-    // }
+    
     
 ?>
