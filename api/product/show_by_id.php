@@ -41,7 +41,6 @@
         echo $json_data;
     }
     else{
-        http_response_code(404); 
-        echo json_encode(array("message" => "404 NOT FOUND"), JSON_PRETTY_PRINT);
+        throwMessage(NOT_FOUND, "NOT FOUND");
     }
 ?>
