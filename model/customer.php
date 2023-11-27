@@ -62,6 +62,49 @@ class customer{
             return false;
         }
     }
+    public function update(){
+        $query = "UPDATE customer SET ";
+        if( $this-> name != null){
+            $query .=	" name = '" . $this->name . "',";
+        }
+        if( $this-> password != null){
+            $query .=	" password = SHA2('" . $this->password . ", 256)',";
+        }
+        if( $this-> phone != null){
+            $query .=	" phone = '" . $this->phone . "',";
+        }
+        if( $this-> gender != null){
+            $query .=	" gender = '" . $this->gender . "',";
+        }
+        if( $this-> birthday != null){
+            $query .=	" birthday = '" . $this->birthday . "',";
+        }
+        if( $this-> address != null){
+            $query .=	" address = '" . $this->address . "',";
+        }
+        if( $this-> quarter != null){
+            $query .=	" quarter = '" . $this->quarter . "',";
+        }
+        if( $this-> district != null){
+            $query .=	" district = '" . $this->district . "',";
+        }
+        if( $this-> city != null){
+            $query .=	" city = '" . $this->city . "',";
+        }
+        if( $this-> image != null){
+            $query .=	" image = '" . $this->image . "',";
+        }
+        $query = substr($query, 0, -1);
+        $query .= " WHERE email = :email";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":email", $this->email);
+        if($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
 
 }
