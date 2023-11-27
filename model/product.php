@@ -46,12 +46,14 @@ class product{
     }
     
     public function show_by_category_brand(){
-        $query = "SELECT * FROM product, category ";
+        $query = "SELECT product.id as ID, product.name as NAME, PRICE, DESCRIPTION, CATEGORY, BRAND, PRE_DISCOUNT, DISCOUNT_PERCENT, IMAGE, COLOR
+                  FROM product, category ";
 
         if ($this->brand || $this->category_name ){
             $query .= " WHERE ";
             if ($this->brand && $this->category_name){
-                $query .= "product.brand = :brand AND category.name = :category_name";
+                $query .= "product.brand = :brand AND category.name = :category_name
+                            AND product.category = category.id";
             }else{
                 if ($this->brand){
                     $query .= "product.brand = :brand";
@@ -121,27 +123,8 @@ class product{
     
         return $stmt;
     }
-    public function show_image_detatils(){
-        $query = "SELECT * 
-                  FROM image_detail 
-                  WHERE color =: color and product_id  =: product_id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":color");
-        
-    }
-    
+
     
 
 }
-// $query = "SELECT * 
-        //         FROM product 
-        //         where name LIKE :keyword
-        //         ORDER BY 
-        //         CASE 
-        //             WHEN category = 1 THEN 0 
-        //             WHEN category = 2 THEN 1
-        //             WHEN category = 3 THEN 2
-        //             WHEN category = 4 THEN 3 
-        //             ELSE 4 
-        //             END, name";
 ?>
