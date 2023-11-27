@@ -52,24 +52,24 @@ class product{
         if ($this->brand || $this->category_name ){
             $query .= " WHERE ";
             if ($this->brand && $this->category_name){
-                $query .= "product.brand = :brand AND category.name = :category_name
-                            AND product.category = category.id";
+                $query .= "product.brand = :brand AND category.name = :category_name";
             }else{
                 if ($this->brand){
-                    $query .= "product.brand = :brand";
+                    $query .= " product.brand = :brand";
                 }
                 if ($this->category_name){
-                    $query .= "category.name = :category_name";
+                    $query .= " category.name = :category_name";
                 }
             }
+            $query .= " AND product.category = category.id";
 
         }
         $stmt = $this->conn->prepare($query);
         if ($this->brand) {
-            $stmt->bindParam(':brand', $this->brand);
+            $stmt->bindParam(":brand", $this->brand);
         }
         if ($this->category_name) {
-            $stmt->bindParam(':category_name', $this->category_name);
+            $stmt->bindParam(":category_name", $this->category_name);
         }
         $stmt->execute();
         return $stmt;
