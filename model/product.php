@@ -124,6 +124,15 @@ class product{
         return $stmt;
     }
 
+    public function show_all_brand_by_category(){
+        $query = "SELECT distinct BRAND 
+                  FROM product, category 
+                  WHERE category.name = :category_name AND product.category = category.id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":category_name", $this->category_name);
+        $stmt->execute();
+        return $stmt;
+    }
     
 
 }

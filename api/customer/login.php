@@ -30,6 +30,7 @@
                         //     'status' => INVALID_USER_PASS,
                         //     'message' => 'Email or Password is incorrect.',
                         // ]);
+                        http_response_code(INVALID_USER_PASS);
                         $message = 'Email or Password is incorrect.';
                         throwMessage(INVALID_USER_PASS, $message);
 
