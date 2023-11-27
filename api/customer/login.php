@@ -2,9 +2,11 @@
     header("Access-Control-Allow-Origin:*");
     header('Access-Control-Allow-Method:POST');
     header("Content-Type: application/json");
+    header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With");
     include_once("../../config/db_azure.php");
     include_once("../../model/customer.php");
     include_once("../../vendor/autoload.php");   
+    include_once("../../constants.php");
     
     use \Firebase\JWT\JWT;
 
@@ -24,30 +26,32 @@
                     extract($row);
                     $password_input = htmlentities($data->password);
                     if(hash("sha256", $password_input) != $PASSWORD){
-                        echo json_encode([
-                            'status' => 404,
-                            'message' => 'Email or Password is incorrect.',
-                        ]);
+                        // echo json_encode([
+                        //     'status' => INVALID_USER_PASS,
+                        //     'message' => 'Email or Password is incorrect.',
+                        // ]);
+                        $message = 'Email or Password is incorrect.';
+                        throwMessage(INVALID_USER_PASS, $message);
 
                     }else if ($STATUS != "active"){
                         echo json_encode([
-                            'status' => 404,
+                            'status' => USER_NOT_ACTIVE,
                             'message' => 'User is not activated. Please contact to admin.',
                         ]);
+                            
                     }else{
                         $payload = [
                             'iat' => time(),
                             'iss' => 'localhost',
-                            'exp' => time() + 1,
+                            'exp' => time() + (10*60),
                             'data' => [
                                 'email' => $EMAIL,
                                 'name' => $NAME
                             ]
                         ];
-                        $secret_key = "techshop";
-                        $jwt = JWT::encode($payload, $secret_key, 'HS256');
+                        $jwt = JWT::encode($payload, SECRET_KEY, 'HS256');
                         echo json_encode([
-                            'status' => 1,
+                            'status' => SUCCESS_RESPONSE,
                             'jwt' => $jwt,
                             'message' => 'Login Successfully'
                         ]);
@@ -56,13 +60,13 @@
             }
         }else{
             echo json_encode([
-                'status' => 404,
+                'status' => INVALID_USER_PASS,
                 'message' => 'Email or Password is incorrect.',
             ]);
         }
     }else {
         echo json_encode([
-        'status' => 0,
+        'status' => REQUEST_METHOD_NOT_VALID,
         'message' => 'Access Denied',
     ]);
     }
