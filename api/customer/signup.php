@@ -45,7 +45,7 @@
         }
     }else{
         echo json_encode([
-            'status' => 0,
+            'status' => 400,
             'message' => 'Access Denied',
         ]);
     }
