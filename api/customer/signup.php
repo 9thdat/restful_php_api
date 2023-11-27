@@ -5,6 +5,7 @@
     header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With");
     include_once("../../config/db_azure.php");
     include_once("../../model/customer.php");
+    include_once("../../constants.php");
 
     $db = new db();
     $connect = $db->connect();
@@ -27,27 +28,15 @@
 
         if ($customer->find()){
             if($customer->signup()){
-                echo json_encode([
-                    'status' => 200,
-                    'message' => 'User add Successfully',
-                ]);
+                throwMessage(SUCCESS_RESPONSE, 'User add Successfully');
             }else{
-                echo json_encode([
-                    'status' => 400,
-                    'message' => 'Server Problem',
-                ]);
+                throwMessage(SUCCESS_RESPONSE, "Failed to sign up.");
             }
         }else{
-            echo json_encode([
-                'status' => 400,
-                'message' => 'Email already Exists',
-            ]);
+            throwMessage(SUCCESS_RESPONSE, "Email already Exists");
         }
     }else{
-        echo json_encode([
-            'status' => 400,
-            'message' => 'Access Denied',
-        ]);
+        throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');
     }
 
 ?>

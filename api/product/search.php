@@ -3,6 +3,7 @@
     header("Content-Type: application/json");
     include_once("../../config/db_azure.php");
     include_once("../../model/product.php");
+    include_once("../../constants.php");
 
     $db = new db();
     $connect = $db->connect();
@@ -42,7 +43,7 @@
 
     }else {
         http_response_code(404); 
-        echo json_encode(array("message" => "404 NOT FOUND"), JSON_PRETTY_PRINT);
+        throwMessage(NOT_FOUND, "NOT FOUND");
     }
 
 ?>

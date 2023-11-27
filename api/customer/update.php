@@ -63,10 +63,7 @@
             throwMessage(JWT_PROCESSING_ERROR, $e->getMessage());
         }
     }else {
-        echo json_encode([
-        'status' => REQUEST_METHOD_NOT_VALID,
-        'message' => 'Access Denied',
-        ]);
+        throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');
     }
 
 

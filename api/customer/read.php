@@ -4,6 +4,8 @@
     include_once("../../config/db_azure.php");
     include_once("../../model/customer.php");
     include_once("../../vendor/autoload.php");   
+    include_once("../../constants.php");
+
     
     use \Firebase\JWT\JWT;
     use Firebase\JWT\Key;
@@ -17,24 +19,16 @@
             $allheaders = getallheaders();
             $jwt = $allheaders['Authorization'];
 
-            $secret_key = "techshop";
-            $customer_data = JWT::decode($jwt, new Key($secret_key, 'HS256'));
+            $customer_data = JWT::decode($jwt, new Key(SECRET_KEY, 'HS256'));
             $data = $customer_data->data;
-            echo json_encode([
-                'status' => 200,
-                'message' => $data,
-            ]);
+
+            throwMessage(SUCCESS_RESPONSE, $data);
         }catch(Exception$e){
-            echo json_encode([
-                'status' => 404,
-                'message' => $e->getMessage(),
-            ]);
+            
+            throwMessage(JWT_PROCESSING_ERROR, $e->getMessage());
         }
     }else {
-        echo json_encode([
-            'status' => 0,
-            'message' => 'Access Denied',
-        ]);
+        throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');
     }
 
 

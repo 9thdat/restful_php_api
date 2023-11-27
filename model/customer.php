@@ -77,7 +77,7 @@ class customer{
             $query .=	" gender = '" . $this->gender . "',";
         }
         if( $this-> birthday != null){
-            $query .=	" birthday = '" . $this->birthday . "',";
+            $query .=	" birthday = STR_TO_DATE('" . $this->birthday . "' , '%d-%m-%Y'),";
         }
         if( $this-> address != null){
             $query .=	" address = '" . $this->address . "',";
