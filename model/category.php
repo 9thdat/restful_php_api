@@ -54,5 +54,12 @@ class category{
         printf("Error %s. \n", $stmt-> error);
         return false;
     }
+    
+    public function showall(){
+        $query = "SELECT * FROM category";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
 
 }
