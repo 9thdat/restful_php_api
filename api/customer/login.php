@@ -34,6 +34,7 @@
                         throwMessage(INVALID_USER_PASS, $message);
 
                     }else if ($STATUS != "active"){
+                        http_response_code(USER_NOT_ACTIVE);
                         echo json_encode([
                             'status' => USER_NOT_ACTIVE,
                             'message' => 'User is not activated. Please contact to admin.',
@@ -50,6 +51,7 @@
                             ]
                         ];
                         $jwt = JWT::encode($payload, SECRET_KEY, 'HS256');
+                        http_response_code(SUCCESS_RESPONSE);
                         echo json_encode([
                             'status' => SUCCESS_RESPONSE,
                             'jwt' => $jwt,
@@ -59,12 +61,14 @@
                     }
             }
         }else{
+            http_response_code(INVALID_USER_PASS);
             echo json_encode([
                 'status' => INVALID_USER_PASS,
                 'message' => 'Email or Password is incorrect.',
             ]);
         }
     }else {
+        http_response_code(REQUEST_METHOD_NOT_VALID);
         echo json_encode([
         'status' => REQUEST_METHOD_NOT_VALID,
         'message' => 'Access Denied',
