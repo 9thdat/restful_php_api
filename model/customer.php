@@ -23,15 +23,19 @@ class customer{
         $stmt->bindParam(":email", $this->email);
         $stmt->execute();
         return $stmt;
-        // if($stmt->execute()){
-        //     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        //     if($user){
-        //         return true;
-        //     }else{
-        //         return false;
-        //     }
-        // }
         
+    }
+    public function find(){
+        $query = "SELECT * FROM customer WHERE email = :email";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":email", $this->email);
+        $stmt->execute();
+        $num = $stmt->rowCount();
+        if($num == 0){
+            return true;
+        }else{
+            return false;
+        }
     }
     public function signup(){
         $query = "INSERT INTO customer(email, name, password, phone, gender, birthday, address, quarter, district, city, status)

@@ -23,10 +23,23 @@
     $customer->district = $data->district;
     $customer->city = $data->city;
 
-    if($customer->signup()){
-        echo json_encode(array("message" => "200 OK"), JSON_PRETTY_PRINT);
+    if ($customer->find()){
+        if($customer->signup()){
+            echo json_encode([
+                'status' => 200,
+                'message' => 'User add Successfully',
+            ]);
+        }else{
+            echo json_encode([
+                'status' => 400,
+                'message' => 'Server Problem',
+            ]);
+        }
     }else{
-        echo json_encode(array("message" => "400 BAD REQUEST"), JSON_PRETTY_PRINT);
+        echo json_encode([
+            'status' => 400,
+            'message' => 'Email already Exists',
+        ]);
     }
 
 ?>

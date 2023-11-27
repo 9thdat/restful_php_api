@@ -127,6 +127,7 @@ class product{
                   WHERE color =: color and product_id  =: product_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":color");
+        
     }
     
     
