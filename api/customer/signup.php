@@ -22,7 +22,7 @@
         $customer->gender = $data->gender;
         $customer->birthday = $data->birthday;
         $customer->address = $data->address;
-        $customer->quarter = $data->quarter;
+        $customer->ward = $data->ward;
         $customer->district = $data->district;
         $customer->city = $data->city;
 

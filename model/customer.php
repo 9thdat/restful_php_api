@@ -8,7 +8,7 @@ class customer{
     public $gender;
     public $birthday;
     public $address;
-    public $quarter;
+    public $ward;
     public $district;
     public $city;
     public $image;
@@ -38,8 +38,8 @@ class customer{
         }
     }
     public function signup(){
-        $query = "INSERT INTO customer(email, name, password, phone, gender, birthday, address, quarter, district, city, status)
-                  VALUES (:email, :name, SHA2(:password, 256), :phone, :gender, STR_TO_DATE(:birthday, '%d-%m-%Y'), :address, :quarter, :district, :city, :status)";
+        $query = "INSERT INTO customer(email, name, password, phone, gender, birthday, address, ward, district, city, status)
+                  VALUES (:email, :name, SHA2(:password, 256), :phone, :gender, STR_TO_DATE(:birthday, '%d-%m-%Y'), :address, :ward, :district, :city, :status)";
     
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":email", $this->email);
@@ -49,7 +49,7 @@ class customer{
         $stmt->bindParam(":gender", $this->gender);
         $stmt->bindParam(":birthday", $this->birthday);
         $stmt->bindParam(":address", $this->address);
-        $stmt->bindParam(":quarter", $this->quarter);
+        $stmt->bindParam(":ward", $this->ward);
         $stmt->bindParam(":district", $this->district);
         $stmt->bindParam(":city", $this->city);
         $this->status = "active";
@@ -82,8 +82,8 @@ class customer{
         if( $this-> address != null){
             $query .=	" address = '" . $this->address . "',";
         }
-        if( $this-> quarter != null){
-            $query .=	" quarter = '" . $this->quarter . "',";
+        if( $this-> ward != null){
+            $query .=	" ward = '" . $this->ward . "',";
         }
         if( $this-> district != null){
             $query .=	" district = '" . $this->district . "',";
