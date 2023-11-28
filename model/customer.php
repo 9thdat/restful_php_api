@@ -68,7 +68,7 @@ class customer{
             $query .=	" name = '" . $this->name . "',";
         }
         if( $this-> password != null){
-            $query .=	" password = SHA2('" . $this->password . ", 256)',";
+            $query .=	" password = SHA2('" . $this->password . "', 256),";
         }
         if( $this-> phone != null){
             $query .=	" phone = '" . $this->phone . "',";

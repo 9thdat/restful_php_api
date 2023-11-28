@@ -39,7 +39,6 @@
                 'color' => $COLOR
             );
             array_push($product_array['product'], $product_item);
-            // print_r(json_encode($product_item). "\n"); 
         }
         $json_data = json_encode($product_array, JSON_PRETTY_PRINT);
         echo $json_data;
