@@ -14,6 +14,7 @@
     $data = json_decode(file_get_contents("php://input", true));
     $email = $data->email;
 
+
     $token = bin2hex(random_bytes(16));
 
     $token_hash = hash("sha256", $token);
@@ -38,7 +39,7 @@
 
         $mail = require __DIR__ . "/mailer.php";
 
-        $mail->setFrom("noreply@example.com");
+        // $mail->setFrom("noreply@example.com");
         $mail->addAddress($email);
         $mail->Subject = "Password Reset";
         $mail->Body = <<<END
@@ -54,10 +55,12 @@
 
         } catch (Exception $e) {
 
-            echo "Message could not be sent. Mailer error: {$mail->ErrorInfo}";
+            throwMessage(SEND_EMAIL_ERROR, "{$mail->ErrorInfo}");
 
         }
-        echo "Message sent, please check your inbox.";
+        throwMessage(SUCCESS_RESPONSE, "Message sent, please check your inbox.");
+    }else{
+        throwMessage(INVALID_EMAIL, "Email is not registered");
     }
 
     

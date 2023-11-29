@@ -24,13 +24,14 @@ $num = $stmt->rowCount();
 if ($num>0){
     foreach($stmt as $row){
         extract($row);
-        echo $RESET_TOKEN_EXPIRES_AT;
         if (strtotime($RESET_TOKEN_EXPIRES_AT) <= time()) {
-            die("token has expired");
+            throwMessage(TIME_EXPIRED, "Token has expired");
+            die();
         }
     }
 }else{
-    die("token not found");
+    throwMessage(NOT_FOUND, "Toke not found");
+    die();
 }
 
 // $result = $stmt->get_result();
@@ -57,7 +58,7 @@ if ($num>0){
 
     <h1>Reset Password</h1>
 
-    <form method="post" action="process-reset-password.php">
+    <form method="post" action="process_reset_password.php">
 
         <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
 

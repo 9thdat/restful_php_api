@@ -19,6 +19,8 @@
 	define('API_DOST_NOT_EXIST', 					107);
 	define('INVALID_USER_PASS', 					108);
 	define('USER_NOT_ACTIVE', 						109);
+    define('SEND_EMAIL_ERROR', 						110);
+    define('INVALID_EMAIL', 			    		108);
 
 	define('SUCCESS_RESPONSE', 						200);
 
@@ -27,8 +29,9 @@
 	define('JWT_PROCESSING_ERROR',					300);
 	define('ATHORIZATION_HEADER_NOT_FOUND',			301);
 	define('ACCESS_TOKEN_ERRORS',					302);	
+    define('TIME_EXPIRED',		        			303);
 
-    define('NOT_FOUND',                             404);
+    define('NOT_FOUND', 						    404);
 
 
     function validateParameter($fieldName, $value, $dataType, $required = true) {

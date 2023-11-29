@@ -26,13 +26,13 @@ if ($num>0){
     foreach($stmt as $row){
         extract($row);
         if (strtotime($RESET_TOKEN_EXPIRES_AT) <= time()) {
-            die("token has expired");
+            throwMessage(TIME_EXPIRED, "Token has expired");
         }
         $email = $EMAIL;
         
     }
 }else{
-    die("token not found");
+    throwMessage(NOT_FOUND, "Token not found");
 }
 
 
