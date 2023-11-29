@@ -40,8 +40,8 @@
             if ($data_update->address){
                 $customer->address = validateParameter('address', $data_update->address, STRING, false);
             }
-            if ($data_update->quarter){
-                $customer->quarter = validateParameter('quarter', $data_update->quarter, STRING, false);
+            if ($data_update->ward){
+                $customer->ward = validateParameter('quarter', $data_update->quarter, STRING, false);
             }
             if ($data_update->district){
                 $customer->district = validateParameter('district', $data_update->district, STRING, false);
