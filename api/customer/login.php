@@ -19,7 +19,7 @@
     $customer = new customer($connect);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $data = json_decode(file_get_contents("php://input"));
+        $data = json_decode(file_get_contents("php://input"), true);
         $customer->email = htmlentities($data->email);
 
         $login = $customer->login();
@@ -30,12 +30,10 @@
                     $password_input = htmlentities($data->password);
                     if(hash("sha256", $password_input) != $PASSWORD){
                         
-                        http_response_code(INVALID_USER_PASS);
                         $message = 'Email or Password is incorrect.';
                         throwMessage(INVALID_USER_PASS, $message);
 
                     }else if ($STATUS != "active"){
-                        http_response_code(USER_NOT_ACTIVE);
                         echo json_encode([
                             'status' => USER_NOT_ACTIVE,
                             'message' => 'User is not activated. Please contact to admin.',

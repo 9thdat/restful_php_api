@@ -60,12 +60,45 @@
 
         $mail = require __DIR__ . "/mailer.php";
 
-        // $mail->setFrom("noreply@example.com");
         $mail->addAddress($email);
-        $mail->Subject = "=?UTF-8?B?" . base64_encode("Xác minh email từ techshop") . "?=";
+        $mail->Subject = "=?UTF-8?B?" . base64_encode("Verify email from techshop") . "?=";
         $mail->Body = <<<END
 
-        Mã xác minh của bạn là: $key.
+        <div style="max-width:525px;margin:0 auto;text-align:center;padding:0 4px 16px">
+        
+        <tr>
+            <td style="font-size:0px;padding:0px;word-break:break-word" align="left">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                        <tr>
+                            <img alt="" height="48" src="https://img.upanh.tv/2023/11/30/techShopLogo.jpg" style="object-fit:contain;border:0;border-radius:10px;display:block;outline:none;text-decoration:none;height:48px;width:100%;font-size:13px" width="48" class="CToWUd" data-bit="iit">                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="font-size:0px;padding:0px;word-break:break-word" align="center">
+                <div style="font-family:system-ui,Segoe UI,sans-serif;font-size:15px;line-height:1.6;text-align:center;color:#333333">Your Techshop verification code is:
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:0px;padding:0px;word-break:break-word" align="center">
+                <div style="font-family:system-ui,Segoe UI,sans-serif;font-size:19px;font-weight:700;line-height:1.6;text-align:center;color:#333333">$key
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:0px;padding:0px;word-break:break-word" align="center">
+                <div style="font-family:system-ui,Segoe UI,sans-serif;font-size:15px;line-height:1.6;text-align:center;color:#333333">Don't share this code with anyone; our employees will never ask for the code.
+                </div>
+            </td>
+        </tr>
+        
+        </div>
+        
 
         END;
 
