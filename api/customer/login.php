@@ -1,12 +1,15 @@
 <?php 
     header("Access-Control-Allow-Origin:*");
-    header('Access-Control-Allow-Method:POST');
     header("Content-Type: application/json");
-    header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With");
+    header("Access-Control-Allow-Methods: POST");
+    header("Access-Control-Allow-Headers:*");
+    
+    
     include_once("../../config/db_azure.php");
     include_once("../../model/customer.php");
-    include_once("../../vendor/autoload.php");   
     include_once("../../constants.php");
+    include_once("../../vendor/autoload.php");   
+
     
     use \Firebase\JWT\JWT;
 
@@ -16,7 +19,7 @@
     $customer = new customer($connect);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $data = json_decode(file_get_contents("php://input", true));
+        $data = json_decode(file_get_contents("php://input"));
         $customer->email = htmlentities($data->email);
 
         $login = $customer->login();
@@ -59,18 +62,10 @@
                     }
             }
         }else{
-            http_response_code(INVALID_USER_PASS);
-            echo json_encode([
-                'status' => INVALID_USER_PASS,
-                'message' => 'Email or Password is incorrect.',
-            ]);
+            throwMessage(INVALID_USER_PASS, 'Email or Password is incorrect.');
         }
     }else {
-        http_response_code(REQUEST_METHOD_NOT_VALID);
-        echo json_encode([
-        'status' => REQUEST_METHOD_NOT_VALID,
-        'message' => 'Access Denied',
-    ]);
+        throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');
     }
     
     
