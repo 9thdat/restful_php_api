@@ -31,6 +31,9 @@
 	define('ACCESS_TOKEN_ERRORS',					302);	
     define('TIME_EXPIRED',		        			303);
 
+    define('FAILED_UPDATE_PRODUCT_TO_CART', 	    401);
+    define('FAILED_DELETE_PRODUCT_TO_CART', 	    402);
+    define('FAILED_ADD_PRODUCT_TO_CART', 		    403);
     define('NOT_FOUND', 						    404);
 
 

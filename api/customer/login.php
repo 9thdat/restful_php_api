@@ -19,7 +19,7 @@
     $customer = new customer($connect);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = json_decode(file_get_contents("php://input"));
         $customer->email = htmlentities($data->email);
 
         $login = $customer->login();
@@ -43,14 +43,13 @@
                         $payload = [
                             'iat' => time(),
                             'iss' => 'localhost',
-                            'exp' => time() + (10*60),
+                            'exp' => time() + (60*60),
                             'data' => [
                                 'email' => $EMAIL,
                                 'name' => $NAME
                             ]
                         ];
                         $jwt = JWT::encode($payload, SECRET_KEY, 'HS256');
-                        http_response_code(SUCCESS_RESPONSE);
                         echo json_encode([
                             'status' => SUCCESS_RESPONSE,
                             'jwt' => $jwt,
