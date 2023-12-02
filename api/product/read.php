@@ -30,8 +30,7 @@
                 'brand' => $BRAND,
                 'pre_discount' => $PRE_DISCOUNT,
                 'discount_percent' => $DISCOUNT_PERCENT,
-                'image' => $image_data, // Trả về dữ liệu hình ảnh dưới dạng base64
-                'color' => $COLOR
+                'image' => $image_data // Trả về dữ liệu hình ảnh dưới dạng base64
             );
             array_push($product_array['product'], $product_item);
             // print_r(json_encode($product_item). "\n"); 

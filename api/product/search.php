@@ -32,7 +32,6 @@
                 // 'brand' => $BRAND,
                 'pre_discount' => $PRE_DISCOUNT,
                 'discount_percent' => $DISCOUNT_PERCENT,
-                // 'color' => $COLOR,
                 'image' => base64_encode($IMAGE)
             );
             array_push($product_array['product'], $product_item);

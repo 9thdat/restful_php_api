@@ -10,7 +10,6 @@ class product{
     public $brand;
     public $pre_discount;
     public $discount_percent;
-    public $color;
     public $category_name;
 
     public function __construct($db){
@@ -56,7 +55,7 @@ class product{
     }
     
     public function show_by_category_brand(){
-        $query = "SELECT product.id as ID, product.name as NAME, PRICE, DESCRIPTION, CATEGORY, BRAND, PRE_DISCOUNT, DISCOUNT_PERCENT, IMAGE, COLOR
+        $query = "SELECT product.id as ID, product.name as NAME, PRICE, DESCRIPTION, CATEGORY, BRAND, PRE_DISCOUNT, DISCOUNT_PERCENT, IMAGE
                   FROM product, category ";
 
         if ($this->brand || $this->category_name ){
