@@ -4,13 +4,9 @@
 class cart{
     private $conn;
     public $customer_email;
-    public $total_price_cart;
     public $product_id;
     public $color;
     public $quantity;
-    public $type;
-    public $total_price_product;
-
 
     public function __construct($db){
         $this->conn = $db;

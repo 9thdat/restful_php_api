@@ -21,6 +21,7 @@
 	define('USER_NOT_ACTIVE', 						109);
     define('SEND_EMAIL_ERROR', 						110);
     define('INVALID_EMAIL', 			    		108);
+    define('INVALID_DATA_INPUT', 		    		109);
 
 	define('SUCCESS_RESPONSE', 						200);
 
@@ -35,6 +36,8 @@
     define('FAILED_DELETE_PRODUCT_TO_CART', 	    402);
     define('FAILED_ADD_PRODUCT_TO_CART', 		    403);
     define('NOT_FOUND', 						    404);
+    define('FAILED_ORDER',                  	    405);
+    define('FAILD_CANCEL_ORDER',                    406);
 
 
     function validateParameter($fieldName, $value, $dataType, $required = true) {
