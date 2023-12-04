@@ -5,6 +5,7 @@ header("Access-Control-Allow-Headers: *");
 include_once("../../config/db_azure.php");
 include_once("../../model/orders.php");
 include_once("../../model/order_detail.php");
+include_once("../../model/image_detail.php");
 include_once("../../vendor/autoload.php");
 include_once("../../constants.php");
 
@@ -57,13 +58,34 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
                     foreach ($read_oi as $row2) {
                         extract($row2);
+                        $oi_id = $ID;
+                        $oi_productId = $PRODUCT_ID;
+                        $oi_color = $COLOR;
+
+                        $image_detail = new image_detail($connect, $PRODUCT_ID, $COLOR);
+                        $show_image = $image_detail->show_by_productid();
+                        $row3 = $show_image->rowCount();
+                        $image;
+                        if ($row3 > 0){
+                            foreach($show_image as $row3){
+                                extract($row3);
+                                if ($ORDINAL == 0){
+                                    $image = $IMAGE;
+                                    break;
+                                }
+                            }
+                        }else{
+                            throwMessage(NOT_FOUND, "Image not found");
+                        }
+
                         $oi_item = array(
-                            'id' => $ID,
+                            'id' => $oi_id,
                             'order_id' => $ORDER_ID,
-                            'product_id' => $PRODUCT_ID,
-                            'color' => $COLOR,
+                            'product_id' => $oi_productId,
+                            'color' => $oi_color,
                             'quantity' => $QUANTITY,
-                            'price' => $PRICE
+                            'price' => $PRICE,
+                            'image' => base64_encode($image)
                         );
 
                         array_push($order_detail_array, $oi_item);
