@@ -50,7 +50,7 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
             $orders = new orders($connect, $customer_email, $address, $phone, $shipping_fee, $total_price, $delivery_type, $payment_type);
             $order_id = $orders->order();
             if ($order_id == -1){
-                throwMessage(FAILED_ORDER, "Order Unsuccessfully 1");
+                throwMessage(FAILED_ORDER, "Order Unsuccessfully, Can't create order");
             }else{
                 foreach ($data->product as $product) {
                     $product_id = $product->id;
@@ -60,7 +60,7 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
 
                     $order_detail = new order_detail($connect, $order_id, $product_id, $color, $quantity, $price);
                     if(!$order_detail->add()){
-                        throwMessage(FAILED_ORDER, "Order Unsuccessfully");
+                        throwMessage(FAILED_ORDER, "Order Unsuccessfully, Can't add order detail");
                     }
                     $product_update = new product_quantity($connect, $product_id, $color, $quantity);
                     $product_update->update_sold_order();
@@ -72,7 +72,6 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
             throwMessage(INVALID_DATA_INPUT, "Product or Data Invalid");
         }
         
-       
     }catch(Exception $e){
         throwMessage(JWT_PROCESSING_ERROR, $e->getMessage());
     }

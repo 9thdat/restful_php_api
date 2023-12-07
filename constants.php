@@ -20,8 +20,9 @@
 	define('INVALID_USER_PASS', 					108);
 	define('USER_NOT_ACTIVE', 						109);
     define('SEND_EMAIL_ERROR', 						110);
-    define('INVALID_EMAIL', 			    		108);
-    define('INVALID_DATA_INPUT', 		    		109);
+    define('INVALID_EMAIL', 			    		111);
+    define('INVALID_DATA_INPUT', 		    		112);
+    define('CALCULATE_FEE_FAILED', 		    		113);
 
 	define('SUCCESS_RESPONSE', 						200);
 
@@ -74,9 +75,9 @@
 
     function throwMessage($code, $message) {
         header("content-type: application/json");
-        $errorMsg = json_encode(['status'=>$code, 
+        $Msg = json_encode(['status'=>$code, 
                                  'message'=>$message]);
-        echo $errorMsg; exit;
+        echo $Msg; exit;
     }
 
 
