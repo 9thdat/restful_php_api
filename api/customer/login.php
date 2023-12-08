@@ -53,7 +53,20 @@
                         echo json_encode([
                             'status' => SUCCESS_RESPONSE,
                             'jwt' => $jwt,
-                            'message' => 'Login Successfully'
+                            'message' => 'Login Successfully',
+                            'data' => [
+                                'email' => $EMAIL,
+                                'name' => $NAME,
+                                'phone' => $PHONE,
+                                'gender' => $GENDER,
+                                'birthday' => $BIRTHDAY,
+                                'address' => $ADDRESS,
+                                'ward' => $WARD,
+                                'district' => $DISTRICT,
+                                'city' => $CITY,
+                                'image' => $IMAGE ? base64_encode($IMAGE) : null,
+                                'status' => $STATUS
+                            ]
                         ]);
 
                     }
