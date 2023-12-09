@@ -7,6 +7,12 @@ class category{
     public function __construct($db){
         $this->conn = $db;
     }
+    public function setId($id) {
+        $this->id = $id;
+    }
+    public function setName($name) {
+        $this->name = $name;
+    }
 
     //create data
     public function create(){

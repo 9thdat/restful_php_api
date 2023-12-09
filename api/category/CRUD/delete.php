@@ -12,7 +12,7 @@
     $category = new category($connect);
 
     $data = json_decode(file_get_contents("php://input"));
-    $category->id = $data-> id;
+    $category->setId($data-> id);
     
 
     if($category->delete()){

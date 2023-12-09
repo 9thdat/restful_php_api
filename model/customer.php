@@ -1,21 +1,68 @@
 <?php 
 class customer{
     private $conn;
-    public $email;
-    public $name;
-    public $password;
-    public $phone;
-    public $gender;
-    public $birthday;
-    public $address;
-    public $ward;
-    public $district;
-    public $city;
-    public $image;
-    public $status;
+    private $email;
+    private $name;
+    private $password;
+    private $phone;
+    private $gender;
+    private $birthday;
+    private $address;
+    private $ward;
+    private $district;
+    private $city;
+    private $image;
+    private $status;
 
     public function __construct($connect){
         $this->conn= $connect;
+    }
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    public function setPassword($password) {
+        $this->password = $password;
+    }
+
+    public function setPhone($phone) {
+        $this->phone = $phone;
+    }
+
+    public function setGender($gender) {
+        $this->gender = $gender;
+    }
+
+    public function setBirthday($birthday) {
+        $this->birthday = $birthday;
+    }
+
+    public function setAddress($address) {
+        $this->address = $address;
+    }
+
+    public function setWard($ward) {
+        $this->ward = $ward;
+    }
+
+    public function setDistrict($district) {
+        $this->district = $district;
+    }
+
+    public function setCity($city) {
+        $this->city = $city;
+    }
+
+    public function setImage($image) {
+        $this->image = $image;
+    }
+
+    public function setStatus($status) {
+        $this->status = $status;
     }
     public function login(){
         $query = "SELECT * FROM customer WHERE email = :email ";
@@ -31,7 +78,7 @@ class customer{
         $stmt->bindParam(":email", $this->email);
         $stmt->execute();
         $num = $stmt->rowCount();
-        if($num == 0){
+        if($num > 0){
             return true;
         }else{
             return false;

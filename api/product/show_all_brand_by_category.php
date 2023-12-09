@@ -9,7 +9,8 @@
 
     $product = new product($connect);
 
-    $product->category_name = isset($_GET["categoryName"]) ? $_GET["categoryName"] : null;
+    $category_name = isset($_GET["categoryName"]) ? $_GET["categoryName"] : null;
+    $product->setCategoryName($category_name);
     $show_all_brand_by_category = $product->show_all_brand_by_category();
 
     $num = $show_all_brand_by_category->rowCount();

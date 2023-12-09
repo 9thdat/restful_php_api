@@ -10,8 +10,9 @@
 
     $product = new product($connect);
 
-    $product->name = isset($_GET["key"]) ? $_GET["key"] : die();
-
+    $name = isset($_GET["key"]) ? $_GET["key"] : die();
+    $product->setName($name);
+    
     $search = $product->search();
 
     $num = $search->rowCount();

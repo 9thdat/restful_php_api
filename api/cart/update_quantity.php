@@ -23,13 +23,13 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
         $customer_data = JWT::decode($jwt, new Key(SECRET_KEY, 'HS256'));
         $data = $customer_data->data;
         
-        $cart->customer_email = $data->email;
+        $cart->setCustomerEmail($data->email);
 
         $data = json_decode(file_get_contents("php://input"));
         
-        $cart->product_id = $data->product_id;
-        $cart->color = $data->color;
-        $cart->quantity = $data->quantity;
+        $cart->setProductId($data->product_id);
+        $cart->setColor($data->color);
+        $cart->setQuantity($data->quantity);
 
         if($cart->check_cart_detail()){
             if($cart->update_quantity()){

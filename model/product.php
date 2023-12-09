@@ -1,30 +1,58 @@
 <?php
 class product{
     private $conn;
-    public $id;
-    public $name;
-    public $price;
-    public $description;
-    public $image;
-    public $category;
-    public $brand;
-    public $pre_discount;
-    public $discount_percent;
-    public $category_name;
+    private $id;
+    private $name;
+    private $price;
+    private $description;
+    private $image;
+    private $category;
+    private $brand;
+    private $pre_discount;
+    private $discount_percent;
+    private $category_name;
 
     public function __construct($db){
         $this->conn = $db;
     }
+    public function setId($id) {
+        $this->id = $id;
+    }
+    public function setName($name) {
+        $this->name = $name;
+    }
+    public function setBrand($brand) {
+        $this->brand = $brand;
+    }
 
-    //read data
+    public function setCategory($category) {
+        $this->category = $category;
+    }
+
+    public function setCategoryName($categoryName) {
+        $this->category_name = $categoryName;
+    }
+
+
     public function read(){
         $query = "SELECT * FROM product ";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
+    public function find(){
+        $query = "SELECT * FROM product WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+        $num = $stmt->rowCount();
+        if($num > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
-    //show by id
     public function show_by_id(){
         $query = "SELECT * FROM product where id = ?";
         $stmt = $this->conn->prepare($query);
@@ -141,6 +169,24 @@ class product{
         $stmt->bindParam(":category_name", $this->category_name);
         $stmt->execute();
         return $stmt;
+    }
+
+    public function getCategorybyId(){
+        $query = "SELECT category.name
+                  FROM product
+                  JOIN category ON product.category = category.id
+                  WHERE product.id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->id);
+        $stmt->execute();
+    
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($row) {
+            return $row['name'];
+        } else {
+            return null; 
+        }
     }
     
 

@@ -1,11 +1,11 @@
 <?php
 class order_detail{
     private $conn;
-    public $order_id;
-    public $product_id;
-    public $color;
-    public $quantity;
-    public $price;
+    private $order_id;
+    private $product_id;
+    private $color;
+    private $quantity;
+    private $price;
 
     public function __construct($db, $order_id= null, $product_id= null, $color= null, $quantity= null, $price= null){
         $this->conn = $db;

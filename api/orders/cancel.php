@@ -29,7 +29,7 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
         $order_id = $data->id;
 
         $orders = new orders($connect, $customer_email);
-        $orders->id = $order_id;
+        $orders->setId($order_id);
         if (!$orders->cancel()){
             throwMessage(FAILD_CANCEL_ORDER, "Cancel unsuccessfully");
         }else{

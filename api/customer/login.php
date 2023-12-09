@@ -20,7 +20,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $data = json_decode(file_get_contents("php://input"));
-        $customer->email = htmlentities($data->email);
+        $customer->setEmail(htmlentities($data->email));
 
         $login = $customer->login();
         $num = $login->rowCount();

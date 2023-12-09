@@ -8,8 +8,9 @@
     $connect = $db->connect();
 
     $product = new product($connect);
-    $product->category = isset($_GET["category"]) ? $_GET["category"] : die();
-
+    $category = isset($_GET["category"]) ? $_GET["category"] : die();
+    $product->setCategory($category);
+    
     $show_by_category = $product->show_by_category();
 
     $num = $show_by_category->rowCount();

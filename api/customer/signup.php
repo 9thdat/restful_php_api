@@ -15,16 +15,16 @@
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         $data = json_decode(file_get_contents("php://input"));
-        $customer->email = $data->email;
-        $customer->name = $data->name;
-        $customer->password = $data->password;  
-        $customer->phone = $data->phone;
-        $customer->gender = $data->gender;
-        $customer->birthday = $data->birthday;
-        $customer->address = $data->address;
-        $customer->ward = $data->ward;
-        $customer->district = $data->district;
-        $customer->city = $data->city;
+        $customer->setEmail($data->email);
+        $customer->setName($data->name);
+        $customer->setPassword($data->password);
+        $customer->setPhone($data->phone);
+        $customer->setGender($data->gender);
+        $customer->setBirthday($data->birthday);
+        $customer->setAddress($data->address);
+        $customer->setWard($data->ward);
+        $customer->setDistrict($data->district);
+        $customer->setCity($data->city);
 
         if ($customer->find()){
             if($customer->signup()){

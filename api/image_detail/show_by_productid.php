@@ -8,8 +8,11 @@
     $connect = $db->connect();
 
     $image_detail = new image_detail($connect);
-    $image_detail->product_id = isset($_GET["productid"]) ? $_GET["productid"] : die();
-    $image_detail->color = isset($_GET["color"]) ? $_GET["color"] : null;
+    $product_id = isset($_GET["productid"]) ? $_GET["productid"] : die();
+    $color = isset($_GET["color"]) ? $_GET["color"] : null;
+
+    $image_detail->setProductId($product_id);
+    $image_detail->setColor($color);
 
     $show_by_id = $image_detail->show_by_productid();
     $num = $show_by_id->rowCount();

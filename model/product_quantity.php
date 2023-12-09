@@ -1,9 +1,9 @@
 <?php 
 class product_quantity{
     private $conn;
-    public $product_id;
-    public $color;
-    public $amount;
+    private $product_id;
+    private $color;
+    private $amount;
 
     public function __construct($db, $product_id= null, $color= null, $amount= null){
         $this->conn = $db;

@@ -9,7 +9,8 @@
 
     $product = new product($connect);
     
-    $product->id = isset($_GET["id"]) ? $_GET["id"] : die();
+    $id = isset($_GET["id"]) ? $_GET["id"] : die();
+    $product->setId($id);
 
     $show_by_id = $product->show_by_id();
     $row = $show_by_id->rowCount();

@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $customer_data = JWT::decode($jwt, new Key(SECRET_KEY, 'HS256'));
         $data = $customer_data->data;
 
-        $orders->customer_email = $data->email;
+        $orders->setCustomerEmail($data->email);
 
         $read = $orders->read();
         $row = $read->rowCount();

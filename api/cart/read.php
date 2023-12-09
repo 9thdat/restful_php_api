@@ -22,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         $customer_data = JWT::decode($jwt, new Key(SECRET_KEY, 'HS256'));
         $data = $customer_data->data;
         
-        $cart->customer_email = $data->email;
+        $cart->setCustomerEmail($data->email);
 
         $read = $cart->read();
         $row = $read->rowCount();
@@ -40,7 +40,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                 $conn = $db2->connect();
 
                 $product = new product($conn);
-                $product->id = $PRODUCT_ID;
+                $id = $PRODUCT_ID;
+                $product->setId($id);
                 
                 $show_by_id_cart = $product->show_by_id_cart();
                 $row2 = $show_by_id_cart->rowCount();

@@ -12,8 +12,8 @@
     $category = new category($connect);
 
     $data = json_decode(file_get_contents("php://input"));
-    $category->id = $data-> id;
-    $category->name = $data-> name;
+    $category->setId($data-> id);
+    $category->setName($data-> name);
     
 
     if($category->create()){

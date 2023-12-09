@@ -3,13 +3,25 @@
 
 class cart{
     private $conn;
-    public $customer_email;
-    public $product_id;
-    public $color;
-    public $quantity;
+    private $customer_email;
+    private $product_id;
+    private $color;
+    private $quantity;
 
     public function __construct($db){
         $this->conn = $db;
+    }
+    public function setCustomerEmail($customer_email){
+        $this->customer_email = $customer_email;
+    }
+    public function setProductId($product_id){
+        $this->product_id = $product_id;
+    }
+    public function setColor($color){
+        $this->color = $color;
+    }
+    public function setQuantity($quantity){
+        $this->quantity = $quantity;
     }
 
     public function read(){

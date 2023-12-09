@@ -2,18 +2,18 @@
     date_default_timezone_set('Asia/Ho_Chi_Minh');
 class orders{
     private $conn;
-    public $id;
-    public $customer_email;
-    public $address;
-    public $phone;
-    public $discount;
-    public $shipping_fee;
-    public $total_price;
-    public $order_date;
-    public $completed_date;
-    public $delivery_type;
-    public $payment_type;
-    public $status;
+    private $id;
+    private $customer_email;
+    private $address;
+    private $phone;
+    private $discount;
+    private $shipping_fee;
+    private $total_price;
+    private $order_date;
+    private $completed_date;
+    private $delivery_type;
+    private $payment_type;
+    private $status;
 
     
     public function __construct($db, $customer_email= null, $address= null, $phone= null, $shipping_fee= null, $total_price= null, $delivery_type= null, $payment_type= null) {
@@ -25,6 +25,12 @@ class orders{
         $this->total_price = $total_price;
         $this->delivery_type = $delivery_type;
         $this->payment_type = $payment_type;
+    }
+    public function setCustomerEmail($customer_email){
+        $this->customer_email = $customer_email;
+    }
+    public function setId($id){
+        $this->id = $id;
     }
     public function read(){
         $query = "SELECT * FROM orders WHERE customer_email = :customer_email";
