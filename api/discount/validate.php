@@ -8,6 +8,10 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 $currentDate = date("Y-m-d", time());
 
+if ($_SERVER["REQUEST_METHOD"] !== "GET") {
+    throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');
+}
+
 $db = new db();
 $connect = $db->connect();
 $discount = new discount($connect);
@@ -21,9 +25,6 @@ $discount->setCode($code);
 $validate = $discount->validate();
 $row = $validate->rowCount();
 
-if ($_SERVER["REQUEST_METHOD"] !== "GET") {
-    throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');
-}
 
 if ($row < 1) {
     throwMessage(DISCOUNT_NOT_VALID, "Discount does not exist");
