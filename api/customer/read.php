@@ -20,7 +20,7 @@
             $jwt = $allheaders['Authorization'];
 
             $customer_data = JWT::decode($jwt, new Key(SECRET_KEY, 'HS256'));
-            $data = $customer_data->data;
+            $data = $customer_data->data;   
 
             throwMessage(SUCCESS_RESPONSE, $data);
         }catch(Exception$e){

@@ -44,7 +44,7 @@
         $mail->Subject = "Password Reset";
         $mail->Body = <<<END
 
-        Click <a href="http://localhost/restful_php_api/api/customer/reset_password/reset-password.php?token=$token">here</a> 
+        Click <a href="http://localhost/restful_php_api/api/customer/reset_password/reset_password.php?token=$token">here</a> 
         to reset your password.
 
         END;
