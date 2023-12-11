@@ -36,9 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 extract($row);
                 $orders_item = array(
                     'id' => $ID,
+                    'name' => $NAME,
                     'address' => $ADDRESS,
                     'phone' => $PHONE,
-                    'discount' => $DISCOUNT,
+                    'discount_id' => $DISCOUNT_ID,
                     'shipping_fee' => $SHIPPING_FEE,
                     'total_price' => $TOTAL_PRICE,
                     'order_date' => $ORDER_DATE,

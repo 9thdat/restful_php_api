@@ -4,6 +4,7 @@ class orders{
     private $conn;
     private $id;
     private $customer_email;
+    private $name;
     private $address;
     private $phone;
     private $discount_id;
@@ -16,9 +17,10 @@ class orders{
     private $status;
 
     
-    public function __construct($db, $customer_email= null, $address= null, $phone= null, $shipping_fee= null, $discount_id = null, $total_price= null, $delivery_type= null, $payment_type= null) {
+    public function __construct($db, $customer_email= null, $name = null, $address= null, $phone= null, $shipping_fee= null, $discount_id = null, $total_price= null, $delivery_type= null, $payment_type= null) {
         $this->conn = $db;
         $this->customer_email = $customer_email;
+        $this->name = $name;
         $this->address = $address;
         $this->phone = $phone;
         $this->shipping_fee = $shipping_fee;
@@ -41,13 +43,14 @@ class orders{
         return $stmt;
     }
     public function order(){
-        $query = "INSERT INTO orders (CUSTOMER_EMAIL, ADDRESS, PHONE, DISCOUNT_ID, SHIPPING_FEE, TOTAL_PRICE,
+        $query = "INSERT INTO orders (CUSTOMER_EMAIL, NAME, ADDRESS, PHONE, DISCOUNT_ID, SHIPPING_FEE, TOTAL_PRICE,
             ORDER_DATE, DELIVERY_TYPE, PAYMENT_TYPE, STATUS) 
-            VALUES (:customer_email, :address, :phone, :discount_id, :shipping_fee, :total_price,
+            VALUES (:customer_email, :name, :address, :phone, :discount_id, :shipping_fee, :total_price,
             :order_date, :delivery_type, :payment_type, 'Processing');
             SELECT LAST_INSERT_ID();";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":customer_email", $this->customer_email);
+        $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":address", $this->address);
         $stmt->bindParam(":phone", $this->phone);
         $stmt->bindParam(":discount_id", $this->discount_id);

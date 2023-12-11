@@ -27,11 +27,15 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
         $customer_email = $data->email;
 
         $data = json_decode(file_get_contents("php://input"));
+
+        $data_email = $data->infor->email;
+        $customer_email = ($data_email == null) ? $data_email : $customer_email;
         
+        $name = $data->infor->name;
         $address = $data->infor->address;
         $phone = $data->infor->phone;
         $shipping_fee = $data->infor->shipping_fee;
-        $discount_code = $data->infor->$discount_code;
+        $discount_code = $data->infor->discount_code;
         $total_price = $data->infor->total_price;
         $delivery_type = $data->infor->delivery_type;
         $payment_type = $data->infor->payment_type;
@@ -53,7 +57,7 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
                 }
             }
             
-            $orders = new orders($connect, $customer_email, $address, $phone, $shipping_fee, $discount_id, $total_price, $delivery_type, $payment_type);
+            $orders = new orders($connect, $customer_email, $name, $address, $phone, $shipping_fee, $discount_id, $total_price, $delivery_type, $payment_type);
             $order_id = $orders->order();
             if ($order_id == -1){
                 throwMessage(FAILED_ORDER, "Order Unsuccessfully, Can't create order");
