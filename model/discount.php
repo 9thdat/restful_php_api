@@ -24,10 +24,31 @@ class discount{
         $this->code = $code;
     }
 
+    public function getId(){
+        $query = "SELECT * FROM discount WHERE code = :code";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":code", $this->code);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result['ID'];
+        } else {
+            return null;
+        }
+    }
+
     public function validate(){
         $query = "SELECT * FROM discount WHERE code = :code";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":code", $this->code);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function update_quantity(){
+        $query = "UPDATE discount SET quantity = quantity - 1 WHERE code = :code";
+        $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }

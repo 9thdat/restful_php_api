@@ -7,6 +7,7 @@ include_once("../../config/db_azure.php");
 include_once("../../model/orders.php");
 include_once("../../model/order_detail.php");
 include_once("../../model/product_quantity.php");
+include_once("../../model/discount.php");
 include_once("../../vendor/autoload.php");
 include_once("../../constants.php");
 
@@ -30,10 +31,14 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
         $address = $data->infor->address;
         $phone = $data->infor->phone;
         $shipping_fee = $data->infor->shipping_fee;
-        $discount_id = $data->infor->discount_id;
+        $discount_code = $data->infor->$discount_code;
         $total_price = $data->infor->total_price;
         $delivery_type = $data->infor->delivery_type;
         $payment_type = $data->infor->payment_type;
+
+        $discount = new discount($connect);
+        $discount->setCode($discount_code);
+        $discount_id = $discount->getId();
 
         
         if (isset($data->product) && is_array($data->product)) {
