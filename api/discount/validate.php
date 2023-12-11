@@ -58,7 +58,7 @@ foreach ($validate as $row) {
     echo json_encode([
         'status' => SUCCESS_RESPONSE,
         'data' => [
-            'discount_value' => ($discount_value > $MAX_SPEED) ? $MAX_SPEED : $discount_value
+            'discount_value' => ($MAX_SPEED != -1) ? ( ($discount_value > $MAX_SPEED) ? $MAX_SPEED : $discount_value ) : $discount_value
         ]
     ]);
 
