@@ -40,6 +40,7 @@
     define('NOT_FOUND', 						    404);
     define('FAILED_ORDER',                  	    405);
     define('FAILD_CANCEL_ORDER',                    406);
+    define('FAILED_SIGN_UP',                        407);
 
 
     function validateParameter($fieldName, $value, $dataType, $required = true) {

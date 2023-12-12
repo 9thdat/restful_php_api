@@ -30,10 +30,10 @@
             if($customer->signup()){
                 throwMessage(SUCCESS_RESPONSE, 'User add Successfully');
             }else{
-                throwMessage(SUCCESS_RESPONSE, "Failed to sign up.");
+                throwMessage(FAILED_SIGN_UP, "Failed to sign up.");
             }
         }else{
-            throwMessage(SUCCESS_RESPONSE, "Email already Exists");
+            throwMessage(FAILED_SIGN_UP, "Email already Exists");
         }
     }else{
         throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');

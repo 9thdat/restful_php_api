@@ -14,15 +14,19 @@ class review{
 
     }
 
+    public function setProductId($product_id){
+        $this->product_id = $product_id;
+    }
+
     public function getByProductId(){
-        $query = "SELECT * FROM review WHERE product_id = :product_id";
+        $query = "SELECT* 
+                  FROM review rv, customer c
+                  WHERE product_id = :product_id and rv.CUSTOMER_EMAIL = c.EMAIL";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":product_id", $this->product_id);
         $stmt->execute();
         return $stmt;
     }
-
-
 
 
 }
