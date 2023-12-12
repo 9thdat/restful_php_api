@@ -87,9 +87,9 @@ class customer{
         $stmt->execute();
         $num = $stmt->rowCount();
         if($num > 0){
-            return true;
-        }else{
             return false;
+        }else{
+            return true;
         }
     }
     public function signup(){
