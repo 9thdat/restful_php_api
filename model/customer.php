@@ -72,6 +72,14 @@ class customer{
         return $stmt;
         
     }
+    public function read(){
+        $query = "SELECT * FROM customer WHERE email = :email ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":email", $this->email);
+        $stmt->execute();
+        return $stmt;
+        
+    }
     public function find(){
         $query = "SELECT * FROM customer WHERE email = :email";
         $stmt = $this->conn->prepare($query);
