@@ -10,6 +10,7 @@ class orders{
     private $discount_id;
     private $shipping_fee;
     private $total_price;
+    private $note;
     private $order_date;
     private $completed_date;
     private $delivery_type;
@@ -17,7 +18,7 @@ class orders{
     private $status;
 
     
-    public function __construct($db, $customer_email= null, $name = null, $address= null, $phone= null, $shipping_fee= null, $discount_id = null, $total_price= null, $delivery_type= null, $payment_type= null) {
+    public function __construct($db, $customer_email= null, $name = null, $address= null, $phone= null, $shipping_fee= null, $discount_id = null, $total_price= null, $note = null, $delivery_type= null, $payment_type= null) {
         $this->conn = $db;
         $this->customer_email = $customer_email;
         $this->name = $name;
@@ -26,6 +27,7 @@ class orders{
         $this->shipping_fee = $shipping_fee;
         $this->discount_id = $discount_id;
         $this->total_price = $total_price;
+        $this->note = $note;
         $this->delivery_type = $delivery_type;
         $this->payment_type = $payment_type;
     }
@@ -43,9 +45,9 @@ class orders{
         return $stmt;
     }
     public function order(){
-        $query = "INSERT INTO orders (CUSTOMER_EMAIL, NAME, ADDRESS, PHONE, DISCOUNT_ID, SHIPPING_FEE, TOTAL_PRICE,
+        $query = "INSERT INTO orders (CUSTOMER_EMAIL, NAME, ADDRESS, PHONE, DISCOUNT_ID, SHIPPING_FEE, TOTAL_PRICE, NOTE,
             ORDER_DATE, DELIVERY_TYPE, PAYMENT_TYPE, STATUS) 
-            VALUES (:customer_email, :name, :address, :phone, :discount_id, :shipping_fee, :total_price,
+            VALUES (:customer_email, :name, :address, :phone, :discount_id, :shipping_fee, :total_price, :note,
             :order_date, :delivery_type, :payment_type, 'Processing');
             SELECT LAST_INSERT_ID();";
         $stmt = $this->conn->prepare($query);
@@ -56,6 +58,7 @@ class orders{
         $stmt->bindParam(":discount_id", $this->discount_id);
         $stmt->bindParam(":shipping_fee", $this->shipping_fee);
         $stmt->bindParam(":total_price", $this->total_price);
+        $stmt->bindParam(":note", $this->note);
         $stmt->bindValue(":order_date", date("Y-m-d", time()));
         $stmt->bindParam(":delivery_type", $this->delivery_type);
         $stmt->bindParam(":payment_type", $this->payment_type);

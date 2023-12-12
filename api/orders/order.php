@@ -37,6 +37,7 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
         $shipping_fee = $data->infor->shipping_fee;
         $discount_code = $data->infor->discount_code;
         $total_price = $data->infor->total_price;
+        $note = $data->infor->note;
         $delivery_type = $data->infor->delivery_type;
         $payment_type = $data->infor->payment_type;
 
@@ -57,7 +58,7 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
                 }
             }
             
-            $orders = new orders($connect, $customer_email, $name, $address, $phone, $shipping_fee, $discount_id, $total_price, $delivery_type, $payment_type);
+            $orders = new orders($connect, $customer_email, $name, $address, $phone, $shipping_fee, $discount_id, $total_price, $note, $delivery_type, $payment_type);
             $order_id = $orders->order();
             if ($order_id == -1){
                 throwMessage(FAILED_ORDER, "Order Unsuccessfully, Can't create order");
