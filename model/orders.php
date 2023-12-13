@@ -6,6 +6,9 @@ class orders{
     private $customer_email;
     private $name;
     private $address;
+    private $ward;
+    private $district;
+    private $city;
     private $phone;
     private $discount_id;
     private $shipping_fee;
@@ -18,11 +21,14 @@ class orders{
     private $status;
 
     
-    public function __construct($db, $customer_email= null, $name = null, $address= null, $phone= null, $shipping_fee= null, $discount_id = null, $total_price= null, $note = null, $delivery_type= null, $payment_type= null) {
+    public function __construct($db, $customer_email= null, $name = null, $address= null, $ward = null, $district = null, $city = null, $phone= null, $shipping_fee= null, $discount_id = null, $total_price= null, $note = null, $delivery_type= null, $payment_type= null) {
         $this->conn = $db;
         $this->customer_email = $customer_email;
         $this->name = $name;
         $this->address = $address;
+        $this->ward = $ward;
+        $this->district = $district;
+        $this->city = $city;
         $this->phone = $phone;
         $this->shipping_fee = $shipping_fee;
         $this->discount_id = $discount_id;
@@ -45,15 +51,18 @@ class orders{
         return $stmt;
     }
     public function order(){
-        $query = "INSERT INTO orders (CUSTOMER_EMAIL, NAME, ADDRESS, PHONE, DISCOUNT_ID, SHIPPING_FEE, TOTAL_PRICE, NOTE,
-            ORDER_DATE, DELIVERY_TYPE, PAYMENT_TYPE, STATUS) 
-            VALUES (:customer_email, :name, :address, :phone, :discount_id, :shipping_fee, :total_price, :note,
-            :order_date, :delivery_type, :payment_type, 'Processing');
+        $query = "INSERT INTO orders (CUSTOMER_EMAIL, NAME, ADDRESS, WARD, DISTRICT, CITY, PHONE, DISCOUNT_ID, 
+                SHIPPING_FEE, TOTAL_PRICE, NOTE,ORDER_DATE, DELIVERY_TYPE, PAYMENT_TYPE, STATUS) 
+            VALUES (:customer_email, :name, :address, :ward, :district, :city, :phone, :discount_id, 
+                :shipping_fee, :total_price, :note, :order_date, :delivery_type, :payment_type, 'Processing');
             SELECT LAST_INSERT_ID();";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":customer_email", $this->customer_email);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":address", $this->address);
+        $stmt->bindParam(":ward", $this->ward);
+        $stmt->bindParam(":district", $this->district);
+        $stmt->bindParam(":city", $this->city);
         $stmt->bindParam(":phone", $this->phone);
         $stmt->bindParam(":discount_id", $this->discount_id);
         $stmt->bindParam(":shipping_fee", $this->shipping_fee);

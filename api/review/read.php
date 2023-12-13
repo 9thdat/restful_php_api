@@ -7,9 +7,6 @@ include_once("../../model/review.php");
 include_once("../../vendor/autoload.php");
 include_once("../../constants.php");
 
-date_default_timezone_set('Asia/Ho_Chi_Minh');
-
-$currentDate = date("Y-m-d", time());
 
 if ($_SERVER["REQUEST_METHOD"] !== "GET") {
     throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');
@@ -34,6 +31,7 @@ if($row > 0){
         extract($row);
 
         $review_item = array(
+            'id' => $ID,
             'customer_email' => $CUSTOMER_EMAIL,
             'name' => $NAME,
             'rating' => $RATING,

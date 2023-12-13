@@ -188,6 +188,16 @@ class product{
             return null; 
         }
     }
+
+    public function show_color(){
+        $query = "SELECT COLOR
+                  FROM product p, product_quantity pq
+                  WHERE p.id = pq.product_id and p.id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+        return $stmt;
+    }
     
 
 }
