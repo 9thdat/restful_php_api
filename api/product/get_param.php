@@ -13,9 +13,10 @@ $db = new db();
 $conn = $db -> connect();
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $data = json_decode(file_get_contents("php://input"));
+    //$data = json_decode(file_get_contents("php://input"));
     $product = new product($conn);
-    $id = $data->id;
+    $id = isset($_GET["id"]) ? $_GET["id"] : die();
+   
     $product->setId($id);
 
     if (!$product->find()) {
