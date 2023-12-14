@@ -50,6 +50,24 @@ class orders{
         $stmt->execute();
         return $stmt;
     }
+
+    public function getStatus(){
+        $query = "SELECT STATUS FROM orders WHERE WHERE id = :id and customer_email = :customer_email";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":customer_email", $this->customer_email);
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+        $row = $stmt->rowCount();
+        if($row>0){
+            foreach($stmt as $row){
+                extract($row);
+                return $STATUS;
+            }
+        }
+        return false;
+
+    }
+
     public function order(){
         $query = "INSERT INTO orders (CUSTOMER_EMAIL, NAME, ADDRESS, WARD, DISTRICT, CITY, PHONE, DISCOUNT_ID, 
                 SHIPPING_FEE, TOTAL_PRICE, NOTE,ORDER_DATE, DELIVERY_TYPE, PAYMENT_TYPE, STATUS) 

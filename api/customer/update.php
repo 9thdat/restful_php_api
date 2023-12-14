@@ -24,31 +24,31 @@
             $customer->setEmail($data->email);
             
             $data_update = json_decode(file_get_contents("php://input", true));
-            if ($data_update->name){
+            if (isset($data_update->name) && !empty($data_update->name)){
                 $customer->setName(validateParameter('name', $data_update->name, STRING, false));
             }
-            if ($data_update->password){
+            if (isset($data_update->password) && !empty($data_update->password)){
                 $customer->setPassword(validateParameter('password', $data_update->password, STRING, false));
             }
-            if ($data_update->phone){
+            if (isset($data_update->phone) && !empty($data_update->phone)){
                 $customer->setPhone(validateParameter('phone', $data_update->phone, INTEGER, false));
             }
-            if ($data_update->gender){
+            if (isset($data_update->gender) && !empty($data_update->gender)){
                 $customer->setGender($data_update->gender);
             }
-            if ($data_update->address){
+            if (isset($data_update->address) && !empty($data_update->address)){
                 $customer->setAddress(validateParameter('address', $data_update->address, STRING, false));
             }
-            if ($data_update->ward){
+            if (isset($data_update->ward) && !empty($data_update->ward)){
                 $customer->setWard(validateParameter('ward', $data_update->ward, STRING, false));
             }
-            if ($data_update->district){
+            if (isset($data_update->district) && !empty($data_update->district)){
                 $customer->setDistrict(validateParameter('district', $data_update->district, STRING, false));
             }
-            if ($data_update->city){
+            if (isset($data_update->city) && !empty($data_update->city)){
                 $customer->setCity(validateParameter('city', $data_update->city, STRING, false));
             }
-            if ($data_update->image){
+            if (isset($data_update->image) && !empty($data_update->image)){
                 $customer->setImage($data_update->image);
             }
 

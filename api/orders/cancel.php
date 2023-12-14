@@ -30,6 +30,13 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
 
         $orders = new orders($connect, $customer_email);
         $orders->setId($order_id);
+
+        $status = $orders->getStatus();
+        if ($status !== "Processing"){
+            throwMessage(FAILD_CANCEL_ORDER, "Cancel unsuccessfully because status is {$status}");
+        }
+
+
         if (!$orders->cancel()){
             throwMessage(FAILD_CANCEL_ORDER, "Cancel unsuccessfully");
         }else{
