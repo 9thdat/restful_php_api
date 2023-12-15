@@ -21,14 +21,22 @@
             $customer_data = JWT::decode($jwt, new Key(SECRET_KEY, 'HS256'));
             $data = $customer_data->data;
             
-            $customer->setEmail($data->email);
+            $email = $data->email;
+            $customer->setEmail($email);
             
             $data_update = json_decode(file_get_contents("php://input", true));
             if (isset($data_update->name) && !empty($data_update->name)){
                 $customer->setName(validateParameter('name', $data_update->name, STRING, false));
             }
-            if (isset($data_update->password) && !empty($data_update->password)){
-                $customer->setPassword(validateParameter('password', $data_update->password, STRING, false));
+            if (isset($data_update->new_password) && !empty($data_update->new_password)){
+                if (isset($data_update->old_password) && !empty($data_update->old_password)){
+                    if (checkOldPass($connect, $email, $data_update->old_password)){
+                        $customer->setPassword(validateParameter('password', $data_update->new_password, STRING, false));
+                    }else{
+                        throwMessage(OLD_PASSWORD_NOT_VALID, "Old password incorrect");
+                    }
+                }
+                
             }
             if (isset($data_update->phone) && !empty($data_update->phone)){
                 $customer->setPhone(validateParameter('phone', $data_update->phone, INTEGER, false));
@@ -65,7 +73,22 @@
         throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');
     }
 
+function checkOldPass($connect, $email, $oldPass){
+    $customer = new customer($connect);
+    $customer->setEmail(htmlentities($email));
 
+    $login = $customer->login();
+    $num = $login->rowCount();
+    if ($num>0){
+        foreach($login as $row){
+                extract($row);
+                if(hash("sha256", $oldPass) == $PASSWORD){
+                    return true;
+                }
+        }
+    }
+    return false;
+}
 
 
 

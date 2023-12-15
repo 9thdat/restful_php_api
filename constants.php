@@ -24,6 +24,7 @@
     define('INVALID_DATA_INPUT', 		    		112);
     define('CALCULATE_FEE_FAILED', 		    		113);
     define('DISCOUNT_NOT_VALID', 		    		114);
+    define('OLD_PASSWORD_NOT_VALID', 		    	115);
 
 	define('SUCCESS_RESPONSE', 						200);
 
