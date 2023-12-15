@@ -53,12 +53,18 @@ function responseData($getByProductId, $categoryName) {
     foreach ($getByProductId as $row) {
         extract($row);
 
-        $commonFields = [
-            'product_id' => $PRODUCT_ID,
-            'madein' => $MADEIN,
-            'brandof' => $BRANDOF,
-            'brand' => $BRAND
-        ];
+        if ($categoryName == "phone"){
+            $commonFields = [
+                'product_id' => $PRODUCT_ID
+            ];
+        }else{
+            $commonFields = [
+                'product_id' => $PRODUCT_ID,
+                'madein' => $MADEIN,
+                'brandof' => $BRANDOF,
+                'brand' => $BRAND
+            ];
+        }
 
         switch ($categoryName) {
             case 'phone':
