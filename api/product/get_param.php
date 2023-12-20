@@ -114,7 +114,7 @@ function responseData($getByProductId, $categoryName) {
                     'core' => $CORE,
                     'tech' => $TECH,
                     'size' => $SIZE,
-                    'height' => $HEIGHT
+                    'weight' => $WEIGHT
                 ]);
                 break;
         }

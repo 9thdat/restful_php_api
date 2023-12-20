@@ -9,7 +9,7 @@ class parameter_backupcharger{
     private $timefullcharge;
     private $input;
     private $output;
-    private $height;
+    private $weight;
     private $madeIn;
     private $brandOf;
     private $brand;
