@@ -25,7 +25,7 @@
             extract($row);
 
             $image_item = array(
-                'product_id' => $PRODUCT_ID,
+                'productID' => $PRODUCT_ID,
                 'color' => $COLOR,
                 'ordinal' => $ORDINAL,
                 'image' => base64_encode($IMAGE)
