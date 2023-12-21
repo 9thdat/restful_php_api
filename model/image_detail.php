@@ -32,6 +32,13 @@ class image_detail{
         $stmt->execute();
         return $stmt;
     }
+    public function show_color_by_productid(){
+        $query = "SELECT distinct COLOR FROM image_detail WHERE product_id = :product_id ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":product_id", $this->product_id);  
+        $stmt->execute();
+        return $stmt;
+    }
 }
 
 

@@ -25,7 +25,7 @@ class cart{
     }
 
     public function read(){
-        $query = "SELECT * FROM cart, cart_detail 
+        $query = "SELECT PRODUCT_ID, COLOR, QUANTITY  FROM cart, cart_detail 
                   WHERE customer_email = :customer_email AND cart.id = cart_detail.cart_id";
         $stmt = $this->conn->prepare($query);
 

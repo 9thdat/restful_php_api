@@ -43,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                 $id = $PRODUCT_ID;
                 $product->setId($id);
                 
-                $show_by_id_cart = $product->show_by_id_cart();
+                $show_by_id_cart = $product->show_by_id_cart($COLOR);
                 $row2 = $show_by_id_cart->rowCount();
 
 

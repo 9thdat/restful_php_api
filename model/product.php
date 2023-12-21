@@ -61,12 +61,14 @@ class product{
         return $stmt;
     }
 
-    public function show_by_id_cart(){
+    public function show_by_id_cart($color){
         $query = "SELECT p.ID, NAME, PRICE as PRICE_PRODUCT, CATEGORY, BRAND, PRE_DISCOUNT, DISCOUNT_PERCENT, i.COLOR, QUANTITY as QUANTITY_STOCK, i.IMAGE as IMAGE_COLOR
-                  FROM product p, product_quantity pq, image_detail i
-                  WHERE p.id = pq.PRODUCT_ID and p.id = i.PRODUCT_ID and p.id = ? and i.ORDINAL = -1";
+        FROM product p, product_quantity pq, image_detail i
+        WHERE p.id = pq.PRODUCT_ID and p.id = i.PRODUCT_ID and p.id = ? and i.ORDINAL = -1 and i.color = ?
+          AND i.color = pq.color;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(2, $color);
         $stmt->execute();
         return $stmt;
     }

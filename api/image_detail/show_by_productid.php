@@ -20,6 +20,21 @@
     if ($num > 0){
         $image_array = [];
         $image_array['image'] = [];
+        $color_array=[];
+
+        // while ($row = $show_by_id->fetch(PDO::FETCH_ASSOC)){
+        //     extract($row);
+
+        //     // $image_item = array(
+        //     //     'productID' => $PRODUCT_ID,
+        //     //     'color' => $COLOR,
+        //     //     'ordinal' => $ORDINAL,
+        //     //     'image' => base64_encode($IMAGE)
+        //     // );
+            
+        //     array_push($color_array, $COLOR);
+        //     // array_push($image_array['image'], $image_item);
+        // }
 
         while ($row = $show_by_id->fetch(PDO::FETCH_ASSOC)){
             extract($row);
@@ -33,6 +48,9 @@
 
             array_push($image_array['image'], $image_item);
         }
+
+
+
         $json_data = json_encode($image_array, JSON_PRETTY_PRINT);
         echo $json_data;
 
