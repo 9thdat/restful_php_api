@@ -2,10 +2,11 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: POST");
 include_once("../../constants.php");
 
 
-if ($_SERVER["REQUEST_METHOD"] == "GET"){
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     
 
