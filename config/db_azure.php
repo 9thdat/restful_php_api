@@ -2,7 +2,7 @@
 class db {
     private $servername = "9thdat.mysql.database.azure.com";
     private $username = "dat";
-    private $password = "a@b@123456";
+    private $password = "";
     private $db = "techshop";
     private $conn;
 
