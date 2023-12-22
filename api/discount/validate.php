@@ -1,6 +1,8 @@
 <?php
 header("Access-Control-Allow-Origin:*");
 header("Content-Type: application/json");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: POST");
 include_once("../../config/db_azure.php");
 include_once("../../model/discount.php");
 include_once("../../constants.php");
@@ -8,7 +10,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 $currentDate = date("Y-m-d", time());
 
-if ($_SERVER["REQUEST_METHOD"] !== "GET") {
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');
 }
 
