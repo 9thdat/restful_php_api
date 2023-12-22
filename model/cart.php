@@ -146,6 +146,25 @@ class cart{
         return false;
     }
 
+    public function deleteAll(){
+        $timenow = date("Y-m-d H:i:s", time());
+        $query = "UPDATE cart SET updated_at = ? WHERE customer_email = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $timenow);
+        $stmt->bindParam(2, $this->customer_email);
+        $stmt->execute();
+        
+        $query = "DELETE FROM cart_detail 
+                  WHERE cart_id = (SELECT ID FROM cart WHERE customer_email = :customer_email)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":customer_email", $this->customer_email);
+        $stmt->execute();
+        if ($stmt->rowCount()>0){
+            return true;
+        }
+        return false;
+    }
+
     public function update_quantity(){
         $timenow = date("Y-m-d H:i:s", time());
         $query = "UPDATE cart SET updated_at = ? WHERE customer_email = ?";

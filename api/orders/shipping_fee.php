@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                  'data'=>['total_fee' => $total_fee]]);
         echo $Msg;
     }else{
-        throwMessage(CALCULATE_FEE_FAILED, "Can't calculate fee");
+        throwMessage(CALCULATE_FEE_FAILED, "Can't calculate fee ");
     }
 
 
@@ -145,28 +145,74 @@ function getWardCode($district_id, $ward_name){
     return $ward_code;
 }
 
+function getService($to_district_id){
+    $shop_id = 4007360;
+    $from_district_id = 3695;
+    $service_id = -1;
+    $service_type_id = -1;
+
+    $url_service = 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services';
+    $jsonData = json_encode([
+        "shop_id" => $shop_id,
+        "from_district" => $from_district_id,
+        "to_district" => $to_district_id
+    ]);
+
+    $curlHandle = curl_init($url_service);
+    curl_setopt_array($curlHandle, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => 1,
+        CURLOPT_POSTFIELDS => $jsonData,
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: application/json',
+            'Token: 0a8e7e91-8da4-11ee-a59f-a260851ba65c']
+    ]);
+
+    $response = curl_exec($curlHandle);
+
+
+    if ($response) {
+        $responseData = json_decode($response);
+        $data = $responseData->data[0];
+        if ($responseData->code == 200){
+            $service_id = $data->service_id;
+            $service_type_id = $data->service_type_id;
+        }
+    } else {
+        echo 'Không thể nhận dữ liệu từ API';
+    }
+    curl_close($curlHandle);
+
+    $arrayService = [$service_id, $service_type_id];
+
+    return $arrayService;
+    
+}
+
 function calculateFee($to_district_id, $to_ward_code){
     $total_fee = -1;
     $from_district_id = 3695;
     $from_ward_code = 90737;
 
-    $url_ward = 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee';
+    $serviceData = getService($to_district_id);
+
+    $url_calculate = 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee';
     $jsonData = json_encode([
         "from_district_id" => $from_district_id,
         "from_ward_code" => (string)$from_ward_code,
-        "service_id" => 53320,
-        "service_type_id" => null,
+        "service_id" => $serviceData[0],
+        "service_type_id" => $serviceData[1],
         "to_district_id" => $to_district_id,
         "to_ward_code" => (string)$to_ward_code,
         "height" => null,
         "length" => null,
-        "weight" => 10000,
+        "weight" => 1000,
         "width" => null,
         "insurance_value" => 300000, 
         "cod_failed_amount" => 20000,
         "coupon" => null]);
 
-    $curlHandle = curl_init($url_ward);
+    $curlHandle = curl_init($url_calculate);
 
     curl_setopt_array($curlHandle, [
         CURLOPT_RETURNTRANSFER => true,

@@ -77,9 +77,9 @@ class product{
     public function show_by_category(){
         $query = "SELECT * 
                 FROM product , category 
-                Where category.name = ?";
+                Where category.id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->category_name);
+        $stmt->bindParam(1, $this->category);
         $stmt->execute();
         return $stmt;
     }
