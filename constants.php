@@ -1,5 +1,4 @@
 <?php 
-
 	/*Security*/
 	define('SECRET_KEY', 'test123');
 	

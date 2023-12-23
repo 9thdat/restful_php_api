@@ -3,6 +3,7 @@
     header("Content-Type: application/json");
     include_once("../../config/db_azure.php");
     include_once("../../model/product.php");
+    
 
     $db = new db();
     $connect = $db->connect();

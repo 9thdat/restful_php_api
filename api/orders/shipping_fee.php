@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                  'data'=>['total_fee' => $total_fee]]);
         echo $Msg;
     }else{
-        throwMessage(CALCULATE_FEE_FAILED, "Can't calculate fee ");
+        throwMessage(CALCULATE_FEE_FAILED, "Can't calculate fee");
     }
 
 
@@ -58,6 +58,11 @@ function getProvinceID($cityName){
         $responseData = json_decode($response);
         $data = $responseData->data;
         foreach($data as $dataItem){
+            if ( !strcasecmp($cityName, $dataItem->ProvinceName)){
+                $province_id = $dataItem->ProvinceID ;
+                break;
+            }
+
             if (in_array($cityName, $dataItem->NameExtension)){
                 $province_id = $dataItem->ProvinceID ;
                 break;
@@ -74,7 +79,7 @@ function getProvinceID($cityName){
 function getDistrictID($province_id, $district_name){
     $district_id = -1;
     $url_district = 'https://online-gateway.ghn.vn/shiip/public-api/master-data/district';
-    $jsonData = json_encode(['province_id' => $province_id]);
+    $jsonData = json_encode(["province_id" => $province_id]);
 
     $curlHandle = curl_init($url_district);
 
@@ -93,6 +98,10 @@ function getDistrictID($province_id, $district_name){
         $responseData = json_decode($response);
         $data = $responseData->data;
         foreach($data as $dataItem){
+            if ( !strcasecmp($district_name, $dataItem->DistrictName)){
+                $district_id = $dataItem->DistrictID ;
+                break;
+            }
             $lowercaseData = array_map('strtolower', $dataItem->NameExtension);
             $lowercaseSearchTerm = strtolower($district_name);
             if (in_array($lowercaseSearchTerm, $lowercaseData)){
@@ -130,6 +139,11 @@ function getWardCode($district_id, $ward_name){
         $responseData = json_decode($response);
         $data = $responseData->data;
         foreach($data as $dataItem){
+            if ( !strcasecmp($ward_name, $dataItem->WardName)){
+                $ward_code = $dataItem->WardCode ;
+                break;
+            }
+
             $lowercaseData = array_map('strtolower', $dataItem->NameExtension);
             $lowercaseSearchTerm = strtolower($ward_name);
             if (in_array($lowercaseSearchTerm, $lowercaseData)){
