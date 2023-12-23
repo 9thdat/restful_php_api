@@ -79,6 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
                     $product_update = new product_quantity($connect, $product_id, $color, $quantity);
                     $product_update->update_sold_order();
 
+                    $discount->update_quantity();
                 }
                 throwMessage(SUCCESS_RESPONSE,"Order Successfully");
             }
