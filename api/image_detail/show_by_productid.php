@@ -40,7 +40,7 @@
             extract($row);
 
             $image_item = array(
-                'productID' => $PRODUCT_ID,
+                'productId' => $PRODUCT_ID,
                 'color' => $COLOR,
                 'ordinal' => $ORDINAL,
                 'image' => base64_encode($IMAGE)

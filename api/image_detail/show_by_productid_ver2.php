@@ -32,10 +32,11 @@
 
         if ($num_images > 0) {
             $image_array['color'][$color]['images'] = [];
+            $image_array['color'][$color]['thumbnail'] = [];
             foreach ($show_by_id as $row) {
                 extract($row);
                 if ($ORDINAL == -1) {
-                    $image_array['color'][$color]['thumbnail'] = base64_encode($IMAGE);
+                    array_push($image_array['color'][$color]['thumbnail'], base64_encode($IMAGE));
                 } else {
                     array_push($image_array['color'][$color]['images'], base64_encode($IMAGE));
                 }
