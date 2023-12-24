@@ -44,7 +44,7 @@ class orders{
         $this->id = $id;
     }
     public function read(){
-        $query = "SELECT * FROM orders WHERE customer_email = :customer_email";
+        $query = "SELECT * FROM orders WHERE customer_email = :customer_email ORDER BY ORDER_DATE DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":customer_email", $this->customer_email);
         $stmt->execute();

@@ -42,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
         
         if (isset($data->product) && is_array($data->product)) {
             foreach ($data->product as $product) {
-                $product_id = $product->id;
+                $product_id = $product->productId;
                 $color = $product->color;
                 $quantity = $product->quantity;
                 $product_check = new product_quantity($connect, $product_id, $color, $quantity);
@@ -52,13 +52,13 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
                 }
             }
             
-            $orders = new orders($connect, $customer_email, $name, $address, $ward, $district, $city, $phone, $shipping_fee, $discount_id, $total_price, $note, $delivery_type, $payment_type);
+            $orders = new orders($connect, null, $name, $address, $ward, $district, $city, $phone, $shipping_fee, $discount_id, $total_price, $note, $delivery_type, $payment_type);
             $order_id = $orders->order();
             if ($order_id == -1){
                 throwMessage(FAILED_ORDER, "Order Unsuccessfully, Can't create order");
             }else{
                 foreach ($data->product as $product) {
-                    $product_id = $product->id;
+                    $product_id = $product->productId;
                     $color = $product->color;
                     $quantity = $product->quantity;
                     $price = $product->price;
@@ -70,6 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
                     $product_update = new product_quantity($connect, $product_id, $color, $quantity);
                     $product_update->update_sold_order();
 
+                    $discount->update_quantity();
                 }
                 throwMessage(SUCCESS_RESPONSE,"Order Successfully");
             }

@@ -28,8 +28,6 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
 
         $data = json_decode(file_get_contents("php://input"));
 
-        $data_email = $data->infor->email;
-        $customer_email = ($data_email == null) ? $data_email : $customer_email;
         
         $name = $data->infor->name;
         $address = $data->infor->address;
