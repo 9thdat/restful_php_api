@@ -86,6 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                             'id' => $oi_id,
                             'order_id' => $ORDER_ID,
                             'product_id' => $oi_productId,
+                            'name' => $NAME,
                             'color' => $oi_color,
                             'quantity' => $QUANTITY,
                             'price' => $PRICE,

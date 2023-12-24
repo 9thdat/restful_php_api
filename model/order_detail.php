@@ -16,7 +16,9 @@ class order_detail{
         $this->price = $price;
     }
     public function read(){
-        $query = "SELECT * FROM order_detail WHERE order_id = :order_id";
+        $query = "SELECT o.ID, NAME, ORDER_ID, PRODUCT_ID, COLOR, QUANTITY, o.PRICE
+                  FROM order_detail o, product p
+                  WHERE o.PRODUCT_ID = p.ID AND order_id = :order_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":order_id", $this->order_id);
         $stmt->execute();
