@@ -1,7 +1,7 @@
 <?php 
 header("Access-Control-Allow-Origin:*");
 header("Content-Type: application/json");
-header("Access-Control-Allow-Methods: PUT");
+header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers:*");
 include_once("../../config/db_azure.php");
 include_once("../../model/review.php");
@@ -11,7 +11,7 @@ include_once("../../constants.php");
 use \Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-if ($_SERVER["REQUEST_METHOD"] !== "PUT") {
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');
 }
 
@@ -26,11 +26,11 @@ try{
     $email = $data->email;
 
     $data_update = json_decode(file_get_contents("php://input"));
-    $product_id = $data_update->product_id;
+    $productId = $data_update->productId;
     $rating = $data_update->rating;
     $content = $data_update->content;
 
-    $review = new review($connect, $product_id, $email, $rating, $content);
+    $review = new review($connect, $productId, $email, $rating, $content);
 
     if ($review->add()){
         throwMessage(SUCCESS_RESPONSE, "Add review successfully.");

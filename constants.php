@@ -1,6 +1,6 @@
 <?php 
 	/*Security*/
-	define('SECRET_KEY', 'test123');
+	define('SECRET_KEY', 'Z8EuwBmY5eEWhh8W4EOPJPPG8');
 	
 	/*Data Type*/
 	define('BOOLEAN', 	'1');

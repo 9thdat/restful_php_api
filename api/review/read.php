@@ -15,8 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 $db = new db();
 $connect = $db->connect();
 
-$data = json_decode(file_get_contents("php://input"));
-$product_id = $data->product_id;
+$product_id = isset($_GET["product_id"]) ? $_GET["product_id"] : die();
 
 $review = new review($connect);
 $review->setProductId($product_id);
