@@ -49,6 +49,7 @@ class discount{
     public function update_quantity(){
         $query = "UPDATE discount SET quantity = quantity - 1 WHERE code = :code";
         $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":code", $this->code);
         $stmt->execute();
         return $stmt;
     }
