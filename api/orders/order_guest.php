@@ -42,12 +42,12 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
         
         if (isset($data->product) && is_array($data->product)) {
             foreach ($data->product as $product) {
-                $product_id = $product->productId;
+                $productId = $product->productId;
                 $color = $product->color;
                 $quantity = $product->quantity;
-                $product_check = new product_quantity($connect, $product_id, $color, $quantity);
+                $product_check = new product_quantity($connect, $productId, $color, $quantity);
                 if(!$product_check->check_quantity()){
-                    throwMessage(FAILED_ORDER, "ID: {$product_id}, Color: {$color}. Ordered not enough quantity {$quantity}");
+                    throwMessage(FAILED_ORDER, "ID: {$productId}, Color: {$color}. Ordered not enough quantity {$quantity}");
                     die();
                 }
             }
@@ -58,16 +58,16 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
                 throwMessage(FAILED_ORDER, "Order Unsuccessfully, Can't create order");
             }else{
                 foreach ($data->product as $product) {
-                    $product_id = $product->productId;
+                    $productId = $product->productId;
                     $color = $product->color;
                     $quantity = $product->quantity;
                     $price = $product->price;
 
-                    $order_detail = new order_detail($connect, $order_id, $product_id, $color, $quantity, $price);
+                    $order_detail = new order_detail($connect, $order_id, $productId, $color, $quantity, $price);
                     if(!$order_detail->add()){
                         throwMessage(FAILED_ORDER, "Order Unsuccessfully, Can't add order detail");
                     }
-                    $product_update = new product_quantity($connect, $product_id, $color, $quantity);
+                    $product_update = new product_quantity($connect, $productId, $color, $quantity);
                     $product_update->update_sold_order();
 
                     $discount->update_quantity();
