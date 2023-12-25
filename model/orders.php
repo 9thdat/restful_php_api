@@ -43,6 +43,13 @@ class orders{
     public function setId($id){
         $this->id = $id;
     }
+    public function setName($name){
+        $this->name = $name;
+    }
+    public function setPhone($phone){
+        $this->phone = $phone;
+    }
+
     public function read(){
         $query = "SELECT * FROM orders WHERE customer_email = :customer_email ORDER BY ORDER_DATE DESC";
         $stmt = $this->conn->prepare($query);
@@ -51,10 +58,21 @@ class orders{
         return $stmt;
     }
 
-    public function getStatus(){
-        $query = "SELECT STATUS FROM orders WHERE WHERE id = :id and customer_email = :customer_email";
+    public function read_guest(){
+        $query = "SELECT * 
+                FROM orders 
+                WHERE name = :name AND phone = :phone 
+                ORDER BY ORDER_DATE DESC";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":customer_email", $this->customer_email);
+        $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":phone", $this->phone);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function getStatus(){
+        $query = "SELECT STATUS FROM orders WHERE id = :id ";
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $this->id);
         $stmt->execute();
         $row = $stmt->rowCount();
@@ -108,6 +126,23 @@ class orders{
         $stmt->bindValue(":canceled_date", date("Y-m-d", time()));
         $stmt->bindParam(":order_id", $this->id);
         $stmt->bindParam(":customer_email", $this->customer_email);
+    
+        try {
+            $stmt->execute();
+            return true; 
+        } catch (PDOException $e) {
+            return false; 
+        }
+    }
+
+    public function cancel_guest() {
+        $query = "UPDATE orders SET STATUS = 'Cancelled', CANCELED_DATE = :canceled_date 
+                  WHERE id = :order_id";
+
+        $stmt = $this->conn->prepare($query);
+        
+        $stmt->bindValue(":canceled_date", date("Y-m-d", time()));
+        $stmt->bindParam(":order_id", $this->id);
     
         try {
             $stmt->execute();
