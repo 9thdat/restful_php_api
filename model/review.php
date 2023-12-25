@@ -30,7 +30,8 @@ class review{
     public function getByProductId(){
         $query = "SELECT* 
                   FROM review rv, customer c
-                  WHERE product_id = :product_id and rv.CUSTOMER_EMAIL = c.EMAIL";
+                  WHERE product_id = :product_id and rv.CUSTOMER_EMAIL = c.EMAIL
+                  ORDER BY CREATED_AT DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":product_id", $this->product_id);
         $stmt->execute();
