@@ -14,17 +14,20 @@ $conn = $db->connect();
 
 $data = json_decode(file_get_contents("php://input", true));
 
+$email = $data->email;
 $key = $data->key;
+
 
 $key_hash = hash("sha256", $key);
 
 
-$query = "SELECT EMAIL, VALIDATE_KEY_EXPIRES_AT FROM customer_validate_email
-        WHERE validate_key_hash = ?";
+$query = "SELECT VALIDATE_KEY_EXPIRES_AT FROM customer_validate_email
+        WHERE validate_key_hash = ? and email = ?";
 
 $stmt = $conn->prepare($query);
 
 $stmt->bindParam(1, $key_hash);
+$stmt->bindParam(2, $email);
 
 $stmt->execute();
 
@@ -40,6 +43,6 @@ if ($num>0){
         throwMessage(SUCCESS_RESPONSE, "Email authentication successful");
     }
 }else{
-    throwMessage(NOT_FOUND, "Key not found");
+    throwMessage(NOT_FOUND, "Key incorrect");
 }
 ?>
