@@ -17,16 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST'){
 $data = json_decode(file_get_contents("php://input"));
 
 $token = $data->token;
-$email = $data->email;
 
 $token_hash = hash("sha256", $token);
 
 $query = "SELECT EMAIL, RESET_TOKEN_EXPIRES_AT FROM customer
-        WHERE reset_token_hash = ? AND email = ?";
+        WHERE reset_token_hash = ? ";
 
 $stmt = $conn->prepare($query);
 $stmt->bindParam(1, $token_hash);
-$stmt->bindParam(2, $email);
 
 $stmt->execute();
 

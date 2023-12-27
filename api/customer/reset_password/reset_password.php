@@ -17,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST'){
 
 $data = json_decode(file_get_contents("php://input"));
 
-$email = $data->email;
 $token = $data->token;
 $password = $data->password;
 
@@ -25,11 +24,10 @@ $token_hash = hash("sha256", $token);
 
 
 $query = "SELECT EMAIL, RESET_TOKEN_EXPIRES_AT FROM customer
-        WHERE reset_token_hash = ? AND email = ?";
+        WHERE reset_token_hash = ? ";
 
 $stmt = $conn->prepare($query);
 $stmt->bindParam(1, $token_hash);
-$stmt->bindParam(2, $email);
 $stmt->execute();
 
 $num = $stmt->rowCount();
@@ -46,12 +44,11 @@ if ($num>0){
             SET password = SHA2(:password, 256),
                 reset_token_hash = NULL,
                 reset_token_expires_at = NULL
-            WHERE reset_token_hash = :token_hash and email = :email";
+            WHERE reset_token_hash = :token_hash ";
 
     $stmt2 = $conn->prepare($query2);
     $stmt2->bindParam(":password", $password);
     $stmt2->bindParam(":token_hash", $token_hash);
-    $stmt2->bindParam(":email", $email);
     $stmt2->execute();
 
     if ($stmt2->rowCount()>0){
