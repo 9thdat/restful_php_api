@@ -61,11 +61,12 @@ class orders{
     public function read_guest(){
         $query = "SELECT * 
                 FROM orders 
-                WHERE name = :name AND phone = :phone 
+                WHERE name = :name AND phone = :phone AND id = :id
                 ORDER BY ORDER_DATE DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":phone", $this->phone);
+        $stmt->bindParam(":id", $this->id);
         $stmt->execute();
         return $stmt;
     }
