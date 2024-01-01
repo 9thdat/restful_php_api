@@ -18,8 +18,6 @@ $connect = $db -> connect();
 if($_SERVER["REQUEST_METHOD"] == "PUT"){
     try{
 
-        $customer_email = $data->email;
-
         $data = json_decode(file_get_contents("php://input"));
         $order_id = $data->id;
 
