@@ -68,7 +68,7 @@
         
         <tr>
             <td style="font-size:0px;padding:0px;word-break:break-word" align="left">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px">
+                <table zcellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px">
                     <tbody>
                         <tr>
                             <img alt="" height="48" src="https://img.upanh.tv/2023/11/30/techShopLogo.jpg" style="object-fit:contain;border:0;border-radius:10px;display:block;outline:none;text-decoration:none;height:48px;width:100%;font-size:13px" width="48" class="CToWUd" data-bit="iit">                            </td>

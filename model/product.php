@@ -60,6 +60,19 @@ class product{
         $stmt->execute();
         return $stmt;
     }
+    public function show_name_by_id(){
+        $query = "SELECT NAME FROM product where id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result['NAME'];
+        } else {
+            return null;
+        }
+    }
 
     public function show_by_id_cart($color){
         $query = "SELECT p.ID, NAME, PRICE as PRICE_PRODUCT, CATEGORY, BRAND, PRE_DISCOUNT, DISCOUNT_PERCENT, i.COLOR, QUANTITY as QUANTITY_STOCK, i.IMAGE as IMAGE_COLOR

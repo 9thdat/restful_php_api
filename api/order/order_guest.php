@@ -19,9 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
 
         $data = json_decode(file_get_contents("php://input"));
 
-        $data_email = $data->infor->email;
-        $customer_email = ($data_email == null) ? $data_email : $customer_email;
-        
+        $email = $data->infor->email;
         $name = $data->infor->name;
         $address = $data->infor->address;
         $ward = $data->infor->ward;
@@ -72,6 +70,13 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
 
                     $discount->update_quantity();
                 }
+                if (sendSuccesEmail($data, $order_id) == true){
+                    throwMessage(SUCCESS_RESPONSE,"Order Successfully");
+                }else{
+                    throwMessage(FAILED_ORDER, "Send Email unsuccessfully" );
+                }
+                
+                
                 throwMessage(SUCCESS_RESPONSE,"Order Successfully");
             }
         } else {
@@ -82,6 +87,38 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
     throwMessage(REQUEST_METHOD_NOT_VALID, 'Access Denied');
 }
 
+function sendSuccesEmail($data, $orderId){
 
+    $url_ward = 'http://localhost/restful_php_api/api/order/success_mail/send_success_email.php';
+    $jsonData = json_encode([
+        'orderId' => $orderId,
+        'data'=> $data
+    ]);
+
+    $curlHandle = curl_init($url_ward);
+
+    curl_setopt_array($curlHandle, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => 1,
+        CURLOPT_POSTFIELDS => $jsonData,
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: application/json']
+    ]);
+
+    $response = curl_exec($curlHandle);
+
+    if ($response) {
+        $responseData = json_decode($response);
+        $status = $responseData->status;
+        if ($status == 200){
+            return true;
+        }else{
+            return false;
+        }
+    } else {
+    }
+    curl_close($curlHandle);
+
+}
 
 ?>
