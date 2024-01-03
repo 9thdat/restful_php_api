@@ -79,12 +79,12 @@
                 'id' => $PRODUCT_ID,
                 'name' => $NAME,
                 'price' => $PRICE,
-                // 'description' => $DESCRIPTION,
-                // 'category' => $CATEGORY,
-                // 'brand' => $BRAND,
-                // 'pre_discount' => $PRE_DISCOUNT,
-                // 'discount_percent' => $DISCOUNT_PERCENT,
-                // 'image' => base64_encode($IMAGE) 
+                'description' => $DESCRIPTION,
+                'category' => $CATEGORY,
+                'brand' => $BRAND,
+                'pre_discount' => $PRE_DISCOUNT,
+                'discount_percent' => $DISCOUNT_PERCENT,
+                'image' => base64_encode($IMAGE) 
             );
             array_push($product_array['product'], $product_item);
         }
