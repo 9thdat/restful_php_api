@@ -3,7 +3,7 @@
     header('Access-Control-Allow-Method:POST');
     header("Content-Type: application/json");
     header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With");
-    include_once("../../../../model/parameter_phone.php");
+    include_once("../../../../model/parameter_cable.php");
     include_once("../../../../config/db_azure.php");
     include_once("../../../../constants.php");
     date_default_timezone_set('Asia/Ho_Chi_Minh');
@@ -18,7 +18,7 @@
 
     $data= json_decode(file_get_contents("php://input", true));
 
-    $brand = null; $os = null; $price = null; $ram = null; $rom = null; $charger = null;
+    $brand = null; $price = null; $input = null; $output = null; $length = null; $charger = null;
     
     if(isset($data->brand) && strlen($data->brand) > 0){
         if (strpos($data->brand, '-') === false) {
@@ -28,29 +28,29 @@
         }
     }
         
-    if(isset($data->os) && strlen($data->os) > 0){
-        if (strpos($data->os, '-') === false) {
-            $os = $data->os;
+    if(isset($data->input) && strlen($data->input) > 0){
+        if (strpos($data->input, '-') === false) {
+            $input = $data->input;
         } else {
-            $os = explode("-", $data->os);
+            $input = explode("-", $data->input);
         }
     }
 
-    $price = isset($data->price) && strlen($data->price) ? explode("-", $data->price) : null;
+    $price = isset($data->price) && strlen($data->price) > 0 ? explode("-", $data->price) : null;
     
-    if(isset($data->ram) && strlen($data->ram) > 0){
-        if (strpos($data->ram, '-') === false) {
-            $ram = $data->ram;
+    if(isset($data->output) && strlen($data->output) > 0){
+        if (strpos($data->output, '-') === false) {
+            $output = $data->output;
         } else {
-            $ram = explode("-", $data->ram);
+            $output = explode("-", $data->output);
         }
     }
 
-    if(isset($data->rom) && strlen($data->rom) > 0){
-        if (strpos($data->rom, '-') === false) {
-            $rom = $data->rom;
+    if(isset($data->length) && strlen($data->length) > 0){
+        if (strpos($data->length, '-') === false) {
+            $length = $data->length;
         } else {
-            $rom = explode("-", $data->rom);
+            $length = explode("-", $data->length);
         }
     }
 
@@ -63,8 +63,8 @@
     }
 
 
-    $phone = new parameter_phone($conn);
-    $sort = $phone->sort($brand, $os, $price, $ram, $rom, $charger);
+    $cable = new parameter_cable($conn);
+    $sort = $cable->sort($brand, $price, $input, $output, $length, $charger);
     $num = $sort->rowCount();
     
     if($num > 0){
