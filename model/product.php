@@ -213,7 +213,7 @@ class product{
         $stmt->execute();
         return $stmt;
     }
-    
+
 
 }
 ?>
