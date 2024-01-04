@@ -76,7 +76,7 @@
 
 
             $product_item = array(
-                'id' => $PRODUCT_ID,
+                'id' => $ID,
                 'name' => $NAME,
                 'price' => $PRICE,
                 'description' => $DESCRIPTION,

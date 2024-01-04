@@ -41,7 +41,7 @@ class parameter_cable {
     }
 
     public function sort($brand = null, $price = null, $input = null, $output = null, $length = null, $charger = null){
-        $query = "SELECT *
+        $query = "SELECT p.*
                   FROM product p
                   INNER JOIN parameter_cable pc ON p.ID = pc.PRODUCT_ID
                   WHERE ";

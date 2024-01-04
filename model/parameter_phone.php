@@ -108,7 +108,7 @@ class parameter_phone {
 
 
     public function sort($brand = null, $os = null, $price = null, $ram = null, $rom = null, $charger = null){
-        $query = "SELECT *
+        $query = "SELECT p.*
                   FROM product p
                   INNER JOIN parameter_phone pp ON p.ID = pp.PRODUCT_ID
                   WHERE ";

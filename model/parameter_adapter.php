@@ -41,7 +41,7 @@ class parameter_adapter{
     }
     
     public function sort($brand = null, $price = null, $numberport = null, $output = null, $charger = null){
-        $query = "SELECT *
+        $query = "SELECT p.*
                   FROM product p
                   INNER JOIN parameter_adapter pa ON p.ID = pa.PRODUCT_ID
                   WHERE ";

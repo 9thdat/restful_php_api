@@ -40,7 +40,7 @@ class parameter_backupcharger{
     }
 
     public function sort($brand = null, $price = null, $capacity = null, $input = null, $output = null, $charger = null){
-        $query = "SELECT *
+        $query = "SELECT p.*
                   FROM product p
                   INNER JOIN parameter_backupcharger pb ON p.ID = pb.PRODUCT_ID
                   WHERE ";

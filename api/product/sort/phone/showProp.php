@@ -54,10 +54,10 @@ switch ($prop) {
         }
         break;
     case "charger":
-        array_push($data, "dưới 15 w");
-        array_push($data, "từ 15-25w");
-        array_push($data, "từ 26-60w");
-        array_push($data, "trên 60w");
+        array_push($data, "Dưới 15 w");
+        array_push($data, "Từ 15-25w");
+        array_push($data, "Từ 26-60w");
+        array_push($data, "Trên 60w");
         break;
     default:
         throwMessage(404, "NOT FOUND");
